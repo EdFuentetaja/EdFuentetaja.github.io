@@ -11,7 +11,8 @@ From my previous experience with [P25][P25], I learned how critical symbol synch
 
 The most popular AIS SDR implementation, at the time I write this, is the excellent [GNU AIS][GNU_AIS] project, by Ruben Undheim and Heikki Hannikainen. Let's take a look at how they synchronize with the incoming signal. From receiver.c:
 
-{% highlight cpp linenos %}
+{% highlight cpp linenos=table %}
+
 #define INC 16
 rx->pll = 0;
 rx->pllinc = 0x10000 / 5;

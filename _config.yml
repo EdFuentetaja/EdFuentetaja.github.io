@@ -62,7 +62,7 @@ google_ad_slot           :
 # Site Author
 author:
   name             : "Ed Fuentetaja"
-  avatar           : "Ed-photo.jpg"
+  avatar           : "ed-photo.jpg"
   bio              : "Welcome to my notebook"
   location         : "Singapore"
   email            :
@@ -127,6 +127,7 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
 # Conversion
 markdown: kramdown
+#highlighter: pygmentize
 highlighter: rouge
 lsi: false
 excerpt_separator: "\n\n"
