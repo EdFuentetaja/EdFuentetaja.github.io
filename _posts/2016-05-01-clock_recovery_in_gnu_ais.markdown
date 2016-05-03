@@ -45,9 +45,15 @@ for (i = 0; i < len; i++) {
 
 The code is not so well documented but its concise and its intentions are clear. As important context information note that this code is expecting to receive a signal sampled at 48kHz. Since the AIS symbol rate is 9600bps, then we have exactly 5 samples per symbol (SPS). Note also that the AIS uses a NRZI encoding: a zero-crossing during a symbol period indicates a "zero," no zero-crossing is indicative of a "one."
 
-We see on line 10 how a crossing by zero is detected (the authors are assuming that the signal is without any DC offsets). If the crossing occurs earlier than 1/2 of the symbol period (early), the running period (in the `rx->pll` variable) is increased by 1/16 of the symbol period, otherwise (late) the running period is decreased by the same amount. So this is a simple but effective closed-loop clock recovery by adjusting itself with the zero crossings.
+We see how
 
-Let's take a closer look at how it performs. I have spent some time selecting an example that presents a challenge to the timing algorithm:
+{% highlight cpp %}
+    if ((curr ^ rx->prev) == 1) {
+{% endhighlight %}
+
+detects a crossing by zero (the authors are assuming that the signal is without any DC offsets). If the crossing occurs earlier than 1/2 of the symbol period (early), the running period (in the `rx->pll` variable) is adjusted increasing it by 1/16 of the symbol period, otherwise (late) the running period is decreased by the same amount. So this is a simple but effective closed-loop clock recovery by adjusting itself with the zero crossings.
+
+Let's take a closer look at how it performs. Actually it does quite well most of the time. To be honest I had to spent some time finding an example that challenged this algorithm, such as this one:
 
 
 [![Signal][img1]][img1]
@@ -56,7 +62,7 @@ A closer analysis reveals that the GNU AIS decoder makes one mistake early on, s
 
 [![Annotated signal][img2]][img2]
 
-I have highlighted with a blue shade the training sequence and with vertical lines the segments that the clock recovery algorithm considers as symbol boundaries. Remember that this algorithm will try to keep the zero-crossings in the middle of the symbol period and then notice how in this particular case it's not doing and efficient job. Most of the zero-crossings are dangerously close to the symbol boundaries (red circles), far away from the center. I won't get into further details but the algorithm is mistakenly judging the crossing as "early" in a few instances and the 1/16 correction factor is working too slowing in this particular sequence. As a result, at the symbol period highlighted in red, the poor timing produces a mistake in the bit value. No zero-crossing is detected during this period, where the opposite is true. With the correct timing we should have detected two zero-crossings in the two consecutive periods.
+I have highlighted with a blue shade the training sequence and with vertical lines the segments that the clock recovery algorithm considers as symbol boundaries. Remember that this algorithm will try to keep the zero-crossings in the middle of the symbol period and then notice how in this particular case it's not working so well. Most of the zero-crossings are dangerously close to the symbol boundaries. The "E" indicates that the algorithm considers the crossing as early, likewise the "L" stands for late. I won't get into a lot of detail but just say that the algorithm is misjudging the crossings marked as early in this example. It seems like if you are late enough, you start to look more as early. Additionally, the 1/16 correction factor is working too slowing. As a result, at the symbol period highlighted in red, the poor timing produces a mistake in the bit value. No zero-crossing is detected during this period, where the opposite is true. With the correct timing we should have detected two zero-crossings in the two consecutive periods.
 
 The eye diagram for this signal presents an overall picture
 
@@ -70,11 +76,11 @@ These are some of the limitations of the clock recovery algorithm that I've foun
 * Slow correction factor.
 * Misjudgements in the early/late crossing assessment.
 
-I'm not going to enter into something that at first sight I consider missing from the code and it's the handling of a negative number ever getting into `rx->pll`.
+I'm not going elaborate into something that at first sight I consider missing from the code and it's the handling of a negative number ever getting into `rx->pll`.
 
 On the positive side I have to say that the code does an excellent job in most cases and its conceptual simplicity and straightforward implementation. This can be a key feature when the code runs on a limited embedded processor, although that's not the case of GNU AIS which is targeting a computer running a full OS such as Linux.
 
-I'm concluding this article now. Next I'll cover the M&amp;M clock recovery that is used on a different AIS decoder. After that I'll propose an alternative approach.
+I'm concluding this article now. Next I'll cover the M&amp;M clock recovery algorithm that is used by another popular AIS SDR decoder. After that I'll propose an alternative approach.
 
 [img1]:    /images/AIS/signal_timing.png
 [img2]:    /images/AIS/signal_timing_zoom.png
