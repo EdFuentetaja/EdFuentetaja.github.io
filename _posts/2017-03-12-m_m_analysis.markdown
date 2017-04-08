@@ -41,7 +41,7 @@ We can see in the following chart that in fact this function is very much correl
 
 [![Timing function][f_tau]][f_tau]
 
-So given $$h_1$$ and $$h_{-1}$$ we calculate our $$f$$ and we increase or decrease out sampling phase accordingly. This is great but we still have a long way ahead before the method is practical. The issue is that on the receiving side we never see the individual impulse responses for each transmitted symbol. What we get is $$x(t)$$, the _superposition_ of the delayed responses for each transmitted symbol.
+So given $$h_1$$ and $$h_{-1}$$ we calculate our $$f$$ and we increase or decrease out sampling phase accordingly. This is great but we still have a long way ahead before the method becomes practical. The issue is that on the receiving side we never see the individual impulse responses for each transmitted symbol. What we get is $$x(t)$$, the _superposition_ of the delayed responses for each transmitted symbol.
 
 The genius of the M&M method is to derive a simple approximation whose _expected value_ is the same as our $$f(\tau)$$:
 
@@ -71,7 +71,7 @@ With a simple script we can evaluate the different values of $$z_k$$ at differen
 
 [![zk result][zk_result]][zk_result]
 
-The mean, in blue, matches very well the shape of our timing function $$f(\tau)$$. We can also see how in some cases the $$z(k)$$ we obtain is zero, like in the previous example. So it can be criticized that with some unlucky data combination the method won't work (M&M only claim that this method is valid for equally distributed symbols).
+The mean, in blue, matches very well the shape of our timing function $$f(\tau)$$. We can also see how in some cases the $$z(k)$$ we obtain is zero, like in the previous example. So it can be criticized that with some unfortunate long data combination the method won't work (M&M only claim that this method is valid for equally distributed symbols).
 
 My conclusion is that the method works in principle with GMSK signals. I don't want to make this article any longer and I stop here leaving for the next one an evaluation of the method applied to some real AIS signals. I will use the M&M implementation that comes with GNU radio, which will also give me a chance for its analysis.
 
