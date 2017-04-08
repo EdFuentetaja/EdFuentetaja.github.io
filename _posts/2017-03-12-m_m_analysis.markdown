@@ -51,7 +51,7 @@ being
 
 $$z_k = \frac{1}{2}(x_k a_{k-1} - x_{k-1} a_k)/E\{a_k^2\}$$
 
-That's it, on average, $$z_k$$ tends to be equal to our timing function and we can use this value to adjust our sampling phase. This expression is dependent of the symbols transmitted $$a_k$$, that's why this method is cataloged as "decision-directed feedback." Certainly we don't know what symbols were transmitted, we can only make a decision on what symbols _we think_ were transmitted, based on the $$x_k$$ values we receive. For a bipolar encoding we can decide that $$a_k = 0$$ if $$x_k \lt 0$$ and $$a_k = 1$$ if $$x_k \ge 0$$ (notice that we are counting that $$x(t)$$ is not affected by any DC bias).
+That's it, on average, $$z_k$$ tends to be equal to our timing function and we can use this value to adjust our sampling phase. This expression is dependent of the symbols transmitted $$a_k$$, that's why this method is cataloged as "decision-directed feedback." Certainly we don't know what symbols were transmitted, we can only make a decision on what symbols _we think_ were transmitted, based on the $$x_k$$ values we receive. For a bipolar encoding we can decide that $$a_k = -1$$ (bit 0) if $$x_k \lt 0$$ and $$a_k = 1$$ (bit 1) if $$x_k \ge 0$$ (notice that we are counting that $$x(t)$$ is not affected by any DC bias).
 
 I have expended most of the time in trying to find out from a quantitative point of view whether this approximation works or not. In some particular cases it seems that it doesn't, that the method is a pointless idea. For instance:
 
