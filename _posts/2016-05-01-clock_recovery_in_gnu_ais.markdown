@@ -1,15 +1,17 @@
 ---
 title:  "Clock Recovery in GNU AIS"
 date:   2016-05-01 11:06:30 +0800
-categories: AIS
+categories: SDR
 excerpt: "An analysis of the clock recovery algorithm in the popular GNU AIS software."
+header:
+  image: "Wave_cloud_cropped.jpg"
 ---
 
-This is my first post on this subject. I've been studying the [AIS][AIS] as a hobby for some time now. My goal was to study the current state of SDR demodulators and see if I could improve them in any way. My plan is first to sort out my notes and second to document and share all my findings, in the hope this might be useful for somebody, including a future me.
+This is my first post on this subject. I've been studying the [AIS][AIS] as a hobby for some time now. My goal was to study the current state of SDR decoders and see if I could improve them in any way. My plan is first to sort out my notes and second to document and share all my findings, in the hope this might be useful for somebody, including a future me.
 
 From my previous experience with [P25][P25], I learned how critical symbol synchronization is in the decoding of digital signals. Being a 4-level signal, the P25 is a beast on its on. The 2-level GMSK modulation of AIS makes its analysis much easier to understand and for me to explain.
 
-The most popular AIS SDR implementation, at the time I write this, is the excellent [GNU AIS][GNU_AIS] project, by Ruben Undheim and Heikki Hannikainen. Let's take a look at how they synchronize with the incoming signal. From receiver.c:
+The most popular AIS software decoder implementation, at the time I write this, is the excellent [GNU AIS][GNU_AIS] project, by **Ruben Undheim** and **Heikki Hannikainen**. Let's take a look at how they synchronize with the incoming signal. From receiver.c:
 
 {% highlight cpp %}
 #define INC 16
@@ -51,7 +53,7 @@ We see how
     if ((curr ^ rx->prev) == 1) {
 {% endhighlight %}
 
-detects a crossing by zero (the authors are assuming that the signal is without any DC offsets). If the crossing occurs earlier than 1/2 of the symbol period (early), the running period (in the `rx->pll` variable) is adjusted increasing it by 1/16 of the symbol period, otherwise (late) the running period is decreased by the same amount. So this is a simple but effective closed-loop clock recovery by adjusting itself with the zero crossings.
+detects a crossing by zero (the authors are assuming that the signal is without any DC offsets). If the crossing occurs earlier than 1/2 of the symbol period (early), the running period (in the `rx->pll` variable) is adjusted increasing it by 1/16 of the sampling period, otherwise (late) the running period is decreased by the same amount. So this is a simple but effective closed-loop clock recovery by adjusting itself with the zero crossings.
 
 Let's take a closer look at how it performs. Actually it does quite well most of the time. To be honest I had to spent some time finding an example that challenged this algorithm, such as this one:
 
@@ -75,8 +77,6 @@ These are some of the limitations of the clock recovery algorithm that I've foun
 * No accounting for signals affected by a DC offset.
 * Slow correction factor.
 * Misjudgements in the early/late crossing assessment.
-
-I'm not going elaborate into something that at first sight I consider missing from the code and it's the handling of a negative number ever getting into `rx->pll`.
 
 On the positive side I have to say that the code does an excellent job in most cases and its conceptual simplicity and straightforward implementation. This can be a key feature when the code runs on a limited embedded processor, although that's not the case of GNU AIS which is targeting a computer running a full OS such as Linux.
 

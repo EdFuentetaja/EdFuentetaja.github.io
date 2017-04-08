@@ -1,0 +1,5 @@
+To run jekyll, cd to the root folder:
+
+bundle exec jekyll serve
+
+bundle is a batch file from Ruby22-x64\bin
