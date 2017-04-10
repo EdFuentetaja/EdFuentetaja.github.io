@@ -2,7 +2,7 @@
 title:  "Analysis of the M&M Clock Recovery Algorithm"
 date:   2017-03-12 00:00:00 +0800
 categories: SDR
-excerpt: "An analysis and critique of the Mueller and Müller clock recovery algorithm."
+excerpt: "An analysis of the Mueller and Müller clock recovery algorithm."
 header:
   image: "5682_13082_4_cropped.jpg"
 ---
