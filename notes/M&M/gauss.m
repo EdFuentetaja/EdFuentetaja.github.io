@@ -108,8 +108,9 @@ legend;
 
 figure(555);
 clf
-plot([1:numel(H)],-H+S2,'o-');
-set(gca,'XTick',[0:numel(t)])
+plot([1:numel(H)],X(22,:),'o-');
+grid on;
+set(gca,'XTick',(1:2:numel(H)))
 
 E0=zeros(1,numel(H));
 E1=zeros(1,numel(H));

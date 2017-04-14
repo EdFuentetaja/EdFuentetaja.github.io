@@ -57,9 +57,9 @@ I have expended most of the time in trying to find out from a quantitative point
 
 [![Negative example][example_negative]][example_negative]
 
-A simple sequence of a 0 followed by a 1 that we sample late. Clearly the shape has to be symmetric and the value $$x_{k-1} = -x_k$$. Then
+The sequence "01010" that we sample late. Clearly the peaks and valleys are symmetric and at $$k=27$$ (T is 10 in this example) the value of $$x_{17} = -x_{27}$$. Then
 
-$$z_k = \frac{1}{2}(x_k a_{k-1} - x_{k-1} a_k)/E\{a_k^2\} = \frac{1}{2}(x_k\times-1 - (-x_k)\times1) = 0$$
+$$z_k = \frac{1}{2}(x_k a_{k-1} - x_{k-1} a_k)/E\{a_k^2\} = \frac{1}{2}(x_k\times1 - (-x_k)\times-1) = 0$$
 
 therefore, no problem whatsoever with the sampling phase is detected, we get under the impression that our timing is perfect, which is not the case. Is the problem that this method cannot be applied to GMSK signals? Is it something else? Well, no. The method only claims that it is the _expected value_ of $$z_k$$ that should get equal to our timing function. Let's see how it in fact works. Let's take the 32 possible combinations of 5 binary symbols and the expected $$x(t)$$ that we should receive in each case. The following figure is the superposition of all of them (I'm not yet considering the addition of noise):
 
