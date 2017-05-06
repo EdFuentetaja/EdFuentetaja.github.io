@@ -4,7 +4,7 @@ date:   2017-03-12 00:00:00 +0800
 categories: SDR
 excerpt: "An analysis of the Mueller and Müller clock recovery algorithm."
 header:
-  image: "5682_13082_4_cropped.jpg"
+  image: "5682_13082_4_cropped_c.jpg"
 ---
 
 In my attempt to improve the AIS decoding software I run across a GNU Radio-based implementation that can be found at [FunWithElectronics][funwithelectronics_ais]. This implementation uses the classical Mueller and Müller (M&M) timing recovery method. While trying to understand how it works I was misguided by several sources, wasted a lot of time and was about to give up. Finally I think I'm getting somewhere and I'm glad I did so I can move on with the rest of my life.

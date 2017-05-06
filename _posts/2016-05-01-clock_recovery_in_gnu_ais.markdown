@@ -4,7 +4,7 @@ date:   2016-05-01 11:06:30 +0800
 categories: SDR
 excerpt: "An analysis of the clock recovery algorithm in the popular GNU AIS software."
 header:
-  image: "Wave_cloud_cropped.jpg"
+  image: "Wave_cloud_cropped_c.jpg"
 ---
 
 This is my first post on this subject. I've been studying the [AIS][AIS] as a hobby for some time now. My goal was to study the current state of SDR decoders and see if I could improve them in any way. My plan is first to sort out my notes and second to document and share all my findings, in the hope this might be useful for somebody, including a future me.
