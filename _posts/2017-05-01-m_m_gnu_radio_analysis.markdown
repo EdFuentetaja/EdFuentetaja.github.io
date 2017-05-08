@@ -130,7 +130,7 @@ The difference between the timing instants is plotted next:
 
 [![Timing error in the example with correct timing][timing_error_correct]][timing_error_correct]
 
-We can see how the method performs well and after an number of samples the phase error is reduced. The units of the vertical axis are sample periods. Since the sampling rate is ~5.2 times the symbol rate, the maximum error of 0.4 represents an error of ~7.7% of the symbol period (0.4*100/5.2). Mind that an error of 50% of the symbol period is already a total disaster since we will be sampling our symbols at the very same sample where the zero-crossings are supposed to occur.
+We can see how the method performs well and after a number of samples the phase error is reduced. The units of the vertical axis are sample periods. Since the sampling rate is ~5.2 times the symbol rate, the maximum error of 0.4 represents an error of ~7.7% of the symbol period (0.4*100/5.2). Mind that an error of 50% of the symbol period is already a total disaster since we will be sampling our symbols at the very same sample where the zero-crossings are supposed to occur.
 
 Let's see with a longer AIS message how the M&M timing behaves. On the next example we see how once the timing error accumulates in one direction exceeding some threshold it bounces to the opposite direction:
 
@@ -162,7 +162,7 @@ The conclusion is that the M&M algorithm works and it works better with AIS sign
 
 I'll conclude here this article. It has been a long journey for me to reach some of the secrets inside the M&M timing function and I hope this information can be useful to whoever has an interest in this rather esoteric matters.
 
-On the he next article I will explore a different synchronization technique I have tried during the course of this analysis and that is able to produce results closer to the "exact" timing already mentioned.
+On the next article I will explore a different synchronization technique I have tried during the course of this analysis and that is able to produce results closer to the "exact" timing already mentioned.
 
 
 [funwithelectronics_ais]: http://www.funwithelectronics.com/?id=9
