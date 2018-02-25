@@ -19,11 +19,17 @@ Websockets seems to cover all these needs. I chose the popular [websocketpp][web
 
 The "normal" unsecured WebSocket connections (ws://) are very simple and work out of the box mostly with no problems. The secured version (wss://) making use of the SSL layer is a different story. I lost track of all the little issues that kept creeping and the countless pages I visited on stackoverflow and everywhere else. I apologize if I don't give due credit to everyone. All this confusion is the reason why I have decided to make this notes public. Hopefully they will be useful to someone else.
 
+I'm keeping all the code for the examples on a [github repository][repository]. Use it at your own will, it's under a [MIT License][MITLicense].
+
 ## Notes on the C++ implementation
 
 Big kudos to **Peter Thorson** for his [websocketpp][websocketpp]. Things I like: it comes as a header only library, it's multiplatform and even allows to choose between using a C11 compiler or the Boost libraries. Things I didn't like so much are the coding examples, in my opinion confusing and bloated; I had to modify them extensively. I didn't like the fact neither that the library swallows the error codes from OpenSSL which are critical for troubleshooting the inevitable errors that are going to happen with certificates, ciphers and what not (this fact is already reported to the author). And particularly I didn't like how the client came out. I was looking for a way to be able to switch easily between secure and unsecure connections but I haven't been able to achieve this. I'd like to define in a configuration file whether the connection should be secure or not and have the same code to handle the communication once it is established but at this moment I don't think this is possible. One'll need to add additional logic on the application layer.
 
 There are two C++ projects in the repository: _WebSocketCPPClient_ and _WebSocketCPPServer_, including one common utility file that process PFX files. I prefer to use PFX files rather than having the private key file in the open. PFX files are encrypted and even though the password in the end needs to be compiled into the application at least it'd make hacking of the certificates more time consuming for the bad guys.
+
+I have to apologize because my home development environment is a _Visual Studio 2012_ and I'm not sure I want to spend more time on this preparing more appropriate _CMake_ files to facility the compilation of the code on Linux. On the project files the paths to the header and lib folders is hardcoded from my local hard drive. _Visual Studio 2012_ is not a C11 compiler and so I'm using the _Boost_ libraries to enable the modern language features. I apologize for all of these, it might take a bit of tinkering to make the code compile on your environment.
+
+The version of _Boost_ I'm using is **1.66.0**. _OpenSSL_ version is **1.0.2n**.
 
 Regarding the certificate validation, note that I'm not particularly interested in using the Microsoft standard way of installing trusted root certificates in Windows machines. I prefer to have a folder in the computer and indicate the OpenSSL layer where it is, this approach should work on any platform.
 
@@ -151,8 +157,10 @@ That should be able to generate all the files I'm using throughout the examples.
 
 That's all so far. I added plenty of comments to the source code, I hope they are clear enough.
 
-[websocketpp]:    https://github.com/zaphoyd/websocketpp
-[websocket-sharp]:    https://github.com/sta/websocket-sharp
-[Node.js]:    https://nodejs.org/en/
-[s1]:         https://stackoverflow.com/questions/10175812/how-to-create-a-self-signed-certificate-with-openssl
-[s2]:         https://superuser.com/questions/1202498/create-self-signed-certificate-with-subjectaltname-to-fix-missing-subjectaltnam/1202506#1202506
+[repository]:      https://github.com/EdFuentetaja/WebSockets
+[websocketpp]:     https://github.com/zaphoyd/websocketpp
+[websocket-sharp]: https://github.com/sta/websocket-sharp
+[Node.js]:         https://nodejs.org/en/
+[s1]:              https://stackoverflow.com/questions/10175812/how-to-create-a-self-signed-certificate-with-openssl
+[s2]:              https://superuser.com/questions/1202498/create-self-signed-certificate-with-subjectaltname-to-fix-missing-subjectaltnam/1202506#1202506
+[MITLicense]:      https://opensource.org/licenses/MIT
