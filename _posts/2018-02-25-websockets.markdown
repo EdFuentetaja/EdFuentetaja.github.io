@@ -61,7 +61,7 @@ Use the same _subjectAltName_ when you are prompted for the Common Name (CN).
 
 ### To see the content of a pem certificate, f.i. the one just generated
 
-`openssl.exe x509 -in server.pem -noout -text`
+`openssl x509 -in server.pem -noout -text`
 
 You should see something like this:
 
@@ -121,15 +121,15 @@ They are used by Diffie-Hellman cyphers. They take a long time to produce so I p
 
 Generate first the client private key:
 
-`openssl.exe genrsa -out client_private_key_do_not_distribute_this_file.pem 2048`
+`openssl genrsa -out client_private_key_do_not_distribute_this_file.pem 2048`
 
 Generate a sign request for the client certificate (client.csr):
 
-`openssl.exe req -new -key client_private_key_do_not_distribute_this_file.pem -out client.csr -days 10000`
+`openssl req -new -key client_private_key_do_not_distribute_this_file.pem -out client.csr -days 10000`
 
 Produce a client certificate (client.pem) signed with the server certificate:
 
-`openssl.exe ca -policy policy_anything -keyfile server_private_key_do_not_distribute_this_file.pem -cert server.pem -out client.pem -infiles client.csr`
+`openssl ca -policy policy_anything -keyfile server_private_key_do_not_distribute_this_file.pem -cert server.pem -out client.pem -infiles client.csr`
 
 The client.pem is the client certificate. Export this file to the PCKS12 format as explained before
 
@@ -137,23 +137,23 @@ The client.pem is the client certificate. Export this file to the PCKS12 format 
 
 Get the subject hash of the server certificate:
 
-`openssl.exe x509 -in server.pem -noout -subject_hash`
+`openssl x509 -in server.pem -noout -subject_hash`
 
 Now, to use the server certificate as a CA on the server side (so it can validate the client certificate signed by it) we have to copy the server certificate to our CA folder, using as file name the subject hash and as extension **.0**
 
 ### To verify that the client certificate is valid
 
-`openssl.exe verify -verbose -CApath <CA directory> client.pem`
+`openssl verify -verbose -CApath <CA directory> client.pem`
 
 That should be able to generate all the files I'm using throughout the examples. Next are a couple of commands that are very useful for troubleshooting
 
 ### To test the server you can run openssl as a debug client
 
-`openssl.exe s_client -host 127.0.0.1 -port 8080 -cert client.pem -key client_private_key_do_not_distribute_this_file.pem`
+`openssl s_client -host 127.0.0.1 -port 8080 -cert client.pem -key client_private_key_do_not_distribute_this_file.pem`
 
 ### And To test the client, run openssl as a debug server
 
-`openssl.exe s_server -accept 8080 -cert server.pem -key server_private_key_do_not_distribute_this_file.pem -Verify`
+`openssl s_server -accept 8080 -cert server.pem -key server_private_key_do_not_distribute_this_file.pem -Verify`
 
 That's all so far. I added plenty of comments to the source code, I hope they are clear enough.
 
