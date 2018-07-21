@@ -1,3 +1,4 @@
+<!-- minify with http://minifycode.com/html-minifier/ -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
@@ -25,12 +26,16 @@
       }
     }
 
+    @page {
+      margin: 20mm 20mm 20mm 20mm;
+    }
+
     @media print {
       a {
         color: #000;
       }
-      body { font-size: 10pt; margin: 20mm 10mm 20mm 10mm; }
-      div.page { margin: 0 auto; width: 100%; }
+      body { font-size: 10pt; }
+      div.page { width: 100%; }
       div.sc h1 { width: 60mm; }
       div.dt { width: 60mm; }
     }
@@ -252,7 +257,7 @@
               <li>Implemented from scratch a heavily optimized software system for digital down conversion using the Intel AVX2 assembly instruction set. It outperforms FPGA implementations running on a general CPU ten times cheaper.</li>
               <li>Engineered a complete product for the detection of frequency hopping and OFDM signals under the noise floor running on inexpensive COTS hardware.</li>
               <li>Built a complete direction finding system that processes in real time 300 million IQ samples per second using a COTS multicore Intel CPU.</li>
-              <li>In charge of the architecture of the software platform for sensor aggregation, analysis and user interface. Currently supporting more than 12 sub-systems including radars, RF signal detectors and direction finders, video analytics, etc.</li>
+              <li>In charge of the architecture of the software platform for sensor aggregation, analysis and user interface. Currently supporting more than 12 sub-systems including radars, video analytics, RF signal detectors, RF direction finders, acoustics, etc.</li>
               <li>Currently developing a signal detection system based on machine learning techniques running on GPU.</li>
               <li>These technologies have helped my division establish a new multimillion-dollar product line that is being marketed now internationally.</li>
             </ul>
@@ -444,7 +449,7 @@
           <div class="pd">
             <ul>
               <li>&ldquo;Software Evolution from a Time-Series Perspective.&rdquo; Proceedings of the International Conference on Software Maintenance ICSM 2002, 3-6 October, 2002, Montreal/Canada. IEEE Computer Society, pp 226-229.</li>
-              <li>Published a <a href="http://www.cpc-power.com/index.php?page=detail&amp;num=3641">video game</a> in 1986 on a national computing magazine. It was an arcade written in Basic and Z80 assembler.</li>
+              <li>Published a <a href="http://www.cpc-power.com/index.php?page=detail&amp;num=3641">video game</a> in 1986 on a national computing magazine. It was an arcade written in Basic and Z80 assembly language.</li>
             </ul>
           </div>
         </div>
