@@ -21,7 +21,7 @@ One final word on my feelings about the latest C++ features. I started coding C+
 
 ... OK... thank you for the explanation, I guess. It turns out that this is meant to avoid creating temporally instances when passing them by value to some function. We can save some valuable execution time depending on how complex is the object and how many times we call the function. But, do we really need this? I'm aware that passing an object by value would create a copy of it. This is why in my code I rarely do. I pass a pointer, problem solved. And I will continue to pass pointers even though I know of this feature. I don't want to scare less seasoned developers away from my code.
 
-C++ can be a beautiful language, we don't need to make it more complicated than it already is.
+C++ can be a beautiful language, we don't need to make it even more complicated than it already is.
 
 [VF]:             https://github.com/vinniefalco
 [repository]:     https://github.com/EdFuentetaja/WebSockets
