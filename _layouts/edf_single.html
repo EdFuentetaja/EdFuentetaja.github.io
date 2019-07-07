@@ -8,6 +8,10 @@ layout: default
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
+<style>
+.center-image { margin: 0 auto; display: block; }
+</style>
+
 {% if site.edf_header_image %}
   {% assign edf_page_header_image = site.edf_header_image %}
 {% endif %}
@@ -16,7 +20,7 @@ layout: default
 {% endif %}
 
 
-{% if (page.header.overlay_color or page.header.overlay_image) or edf_page_header_image %}
+{% if page.header.overlay_color or page.header.overlay_image or edf_page_header_image %}
   {% include edf_page__hero.html %}
 {% endif %}
 
