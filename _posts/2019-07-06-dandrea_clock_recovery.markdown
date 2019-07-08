@@ -75,10 +75,10 @@ can be approximated, as far as power computation is concerned, by:
 
 $$(\dfrac{A^2}{2})^4 + 4(\dfrac{A^2}{2})^3\sigma^2 + 6(\dfrac{A^2}{2})^2\sigma^4 + 4\dfrac{A^2}{2}\sigma^6 + \sigma^8$$
 
-The first term in the summation is our signal while the rest are its noise components. Normalizing $$\sigma$$ to 1, the SNR is approximated by:
-$$\dfrac{(\dfrac{A^2}{2})^4}{4(\dfrac{A^2}{2})^3 + 6(\dfrac{A^2}{2})^2 + 4\dfrac{A^2}{2} + 1}$$
+The first term in the summation is our signal while the rest are its noise components. Normalizing $$\sigma$$ to 1, the SNR of the original $$s(t)$$ is then $$SNR(s) = \dfrac{A^2}{2}$$ and the SNR of our fourth order transformation can be approximated by:
+$$\dfrac{SNR(s)^4}{4SNR(s)^3 + 6SNR(s)^2 + 4SNR(s) + 1}$$
 
-In comparison to our $$s(t)$$ SNR which is $$\dfrac{A^2}{2}$$, we can see that the SNR of our fourth order transformation is about half (3 dB less) for strong signals, about a fourth (6 dB less) when the SNR of s(t) is zero (A is $$\sqrt{2}$$) and decreases rapidly for lower SNRs:
+We can see that this is about one fourth (6 dB less) for high SNR values of $$s(t)$$ and it decreases rapidly for lower SNRs:
 
 ![SNR comparison][snr_comparison]{:.center-image}
 
@@ -90,7 +90,7 @@ the averaged S-curve still looks pretty much unaltered:
 
 ![S-curve of a noisy signal][s_curve_mean_noise]{:.center-image}
 
-Of course we are using we whole signal to average the S-curve, this approach might not be practical in some applications where low latency is critical.
+Of course we are using here we whole signal (about 230 symbols) to average the S-curve, this approach might not be practical in some applications where low latency is critical.
 
 ## Conclusion
 
