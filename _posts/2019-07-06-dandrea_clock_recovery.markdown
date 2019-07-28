@@ -1,5 +1,5 @@
 ---
-title:  "D'Andrea (1990) clock recovery"
+title:  "D'Andrea (1990) Clock Recovery"
 date:   2019-07-06 00:00:00 +0800
 categories: SDR
 excerpt: "Analysis of the D'Andrea (1990) clock recovery method."
@@ -76,6 +76,7 @@ can be approximated, as far as power computation is concerned, by:
 $$(\dfrac{A^2}{2})^4 + 4(\dfrac{A^2}{2})^3\sigma^2 + 6(\dfrac{A^2}{2})^2\sigma^4 + 4\dfrac{A^2}{2}\sigma^6 + \sigma^8$$
 
 The first term in the summation is our signal while the rest are its noise components. Normalizing $$\sigma$$ to 1, the SNR of the original $$s(t)$$ is then $$SNR(s) = \dfrac{A^2}{2}$$ and the SNR of our fourth order transformation can be approximated by:
+
 $$\dfrac{SNR(s)^4}{4SNR(s)^3 + 6SNR(s)^2 + 4SNR(s) + 1}$$
 
 We can see that this is about one fourth (6 dB less) for high SNR values of $$s(t)$$ and it decreases rapidly for lower SNRs:
@@ -86,11 +87,11 @@ We can see then how the degradation of this transformation is worse in presence 
 
 ![Noisy signal differential phase eye diagram][diff_phase_eye_noise]{:.center-image}
 
-the averaged S-curve still looks pretty much unaltered:
+the averaged S-curve still holds its shape, although its amplitude has decreased:
 
 ![S-curve of a noisy signal][s_curve_mean_noise]{:.center-image}
 
-Of course we are using here we whole signal (about 230 symbols) to average the S-curve, this approach might not be practical in some applications where low latency is critical.
+Of course we are using here the whole signal (about 230 symbols) to average the S-curve. This approach might not be practical in some applications where low latency is critical.
 
 ## Conclusion
 
