@@ -129,7 +129,7 @@ gr_complex rotate(gr_complex in)
 
 After a number of iterations (512) the magnitude of the phasor is set back to 1. Why not do this adjustment on every sample? Well, behind the innocent looking ```std::abs``` there is a square root lurking, which is computationally expensive (and a headache in a fixed-point implementation).
 
-But there is one more reason to avoid it: the periodic adjustment we introduce in our phasor is going to inevitably produce some harmonics, detrimental to its quality. Let's see this next with a modified version of the previous fixed-point code that includes the GNU Radio's rotator magnitude compensation logic:
+But there is one more reason to frown upon this implementation: the periodic adjustment we introduce in our phasor is going to inevitably produce some harmonics, detrimental to its quality. Let's see this next with a modified version of the previous fixed-point code that includes the GNU Radio's rotator magnitude compensation logic:
 
 ![Compensated phasor magnitude][compensated_phasor_magnitude]{:.center-image}
 
