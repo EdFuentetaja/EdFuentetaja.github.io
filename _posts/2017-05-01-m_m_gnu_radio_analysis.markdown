@@ -31,12 +31,12 @@ clock_recovery_mm_ff_impl::general_work(int noutput_items,
   while(oo < noutput_items && ii < ni ) {
     // produce output sample
     out[oo] = d_interp->interpolate(&in[ii], d_mu);
-    mm_val = slice(d_last_sample) * out[oo] - 
+    mm_val = slice(d_last_sample) * out[oo] -
              slice(out[oo]) * d_last_sample;
     d_last_sample = out[oo];
 
     d_omega = d_omega + d_gain_omega * mm_val;
-    d_omega = d_omega_mid + 
+    d_omega = d_omega_mid +
               gr::branchless_clip(d_omega-d_omega_mid, d_omega_lim);
     d_mu = d_mu + d_omega + d_gain_mu * mm_val;
 
@@ -80,7 +80,7 @@ Let's say that we call the *interpolate* method with address $$in$$ and let's sa
 
 The next line is the gist of the synchronization and having analyzed the theory behind M&M on the previous article it should look pretty familiar at this point:
 {% highlight c %}
-    mm_val = slice(d_last_sample) * out[oo] - 
+    mm_val = slice(d_last_sample) * out[oo] -
              slice(out[oo]) * d_last_sample;
 {% endhighlight %}
 
@@ -102,16 +102,16 @@ $$mm\_val = a_{k-1} x_k - a_k x_{k-1}$$
 
 which is the value whose expected value converges to the M&M timing function and that we can use to adjust our symbol phase *d_mu* and symbol period *d_omega*.
 
-This adjustment is exactly what is happening in the next lines. 
+This adjustment is exactly what is happening in the next lines.
 
 {% highlight c %}
     d_omega = d_omega + d_gain_omega * mm_val;
-    d_omega = d_omega_mid + 
+    d_omega = d_omega_mid +
               gr::branchless_clip(d_omega-d_omega_mid, d_omega_lim);
     d_mu = d_mu + d_omega + d_gain_mu * mm_val;
 
     ii += (int)floor(d_mu);
-    d_mu = d_mu - floor(d_mu);    
+    d_mu = d_mu - floor(d_mu);
 {% endhighlight %}
 
 The symbol phase is adjusted proportionally to the calculated *mm_val*. As it was explained in the previous article, when the timing is late the M&M timing function returns a negative value, indicative that we should decrement our phase and, likewise, when the timing is early the value is positive so we should increment our phase. The *d_gain_mu* is the __proportional__ constant in our control loop and the rational behind the selection of this particular value of 0.175 is never explained, although it seems to be working well as we will see later.
