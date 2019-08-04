@@ -140,7 +140,7 @@ About 10 Hz of error at 0 dB SNR using a DFT of 256 points, or 0.08% of relative
 
 We can go down to a ridiculously low -20 dB SNR and still expect an error of about 150 Hz or 1.2% in relative terms (well, actually with fs = 96000 and a DFT of 256 points, each bin represents 375 Hz, if we know the bin of our phasor then we start with an uncentainty of +/- 187.5 Hz, so an error of +/- 150 Hz is nothing to write home about).
 
-Related to this topics there is the ["A new detection technique for digital radio communication systems applied spectrum phase interpolation"][paper] paper ("new" as in "1994 new,"" when it was published) by Hitoshi Kitayoshi that is relevant to our topic at hand. There the author applies a particular "hanning" window to the signal and follows a similar approach to what I do here. If I have some time I'd like to study it in more detail but I'd leave it here for now.
+Related to this topic there is the ["A new detection technique for digital radio communication systems applied spectrum phase interpolation"][paper] paper ("new" as in "1994 new," when it was published) by Hitoshi Kitayoshi that is relevant to our topic at hand. There the author applies a particular "hanning" window to the signal and follows a similar approach to what I do here. If I have some time I'd like to study it in more detail but I'd leave it here for now.
 
 [frequency_shifting]:    /sdr/frequency_shifting/
 [peak-location-algorithm]: https://www.embedded.com/design/configurable-systems/4007643/DSP-Tricks-Spectral-peak-location-algorithm
