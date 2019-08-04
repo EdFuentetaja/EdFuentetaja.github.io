@@ -25,7 +25,7 @@ therefore, a multiplication by the phasor $$e^{j 2 \pi f_\Delta t}$$ produces a 
 
 $$s(t) e^{j 2 \pi f_\Delta t} = \sum_{n=-\infty}^{\infty} S[n] e^{j 2 \pi (n/P + f_\Delta) t}$$
 
-The digital implementation of a frequency shift is then pretty straightforward. It requires the generation of a phasor at our desired frequency shift with modulus 1 (unless we want to modify the amplitude of the input signal) and perform a complex multiplication sample by sample of the original signal with this phasor.
+The digital implementation of a frequency shift is then pretty straightforward. It requires the generation of a phasor at our desired frequency shift with magnitude 1 (unless we want to modify the amplitude of the input signal) and perform a complex multiplication sample by sample of the original signal with this phasor.
 
 To take into account that in the digital domain, since we are sampling our signal at some sampling frequency $$f_s$$, the frequency shift would need to get normalized by this frequency. So, to achieve a frequency shift of $$f_\Delta$$ at $$f_s$$ sampling rate, our phasor needs to run at $$f_\Delta/f_s$$ Hz.
 
@@ -70,6 +70,7 @@ int16_t to_int16(float v) {
 std::complex<int16_t> multiply_i16(const std::complex<int16_t>& a,
                                    const std::complex<int16_t>& b) {
 
+    // Perform the computation in 32 bits
     int32_t re_a = std::real(a);
     int32_t im_a = std::imag(a);
     int32_t re_b = std::real(b);
@@ -78,16 +79,16 @@ std::complex<int16_t> multiply_i16(const std::complex<int16_t>& a,
     int32_t re_c = re_a*re_b - im_a*im_b;
     int32_t im_c = re_a*im_b + im_a*re_b;
 
-    return std::complex<int16_t>(to_int16(re_c >> 15), to_int16(im_c >> 15));
+    // Scale down back to 16 bits
+    return std::complex<int16_t>(to_int16(re_c >> 15),
+                                 to_int16(im_c >> 15));
 }
-
-...
 
 float fs = 96000.0f;
 float fd =  3000.0f;
 
-// We take the luxury of a more accurate floating-point computation
-// of the phase_per_sample
+// We enjoy the luxury of a more accurate floating-point
+// phase_per_sample computation
 float rads_per_sample = 2.0f*M_PI*fd/fs;
 std::complex<int16_t> phase_per_sample(to_int16(cosf(rads_per_sample)*32768.0f),
                                        to_int16(sinf(rads_per_sample)*32768.0f));
@@ -96,19 +97,27 @@ std::cout << "Phase per sample: " << phase_per_sample << std::endl;
 
 std::complex<int16_t> phasor(32767, 0);
 
-for (unsigned int i=0; i<100000; i++) {
-    std::cout << phasor << std::endl;
-    phasor = multiply_i16(phasor, phase_per_sample);
+void frequency_shift(const std::complex<int16_t>* input_signal,
+                     std::complex<int16_t>* output_signal,
+                     unsigned int n_samples)
+{
+    for (unsigned int i=0; i < n_samples; i++) {
+        // Rotate the input signal
+        output_signal[i] = multiply_i16(input signal[i], phasor);
+
+        // Rotate our phasor
+        phasor = multiply_i16(phasor, phase_per_sample);
+    }
 }
 {% endhighlight %}
 
-The values are 16-bit integers in the range [-32768,32767] and are scaled up to fully utilize the available dynamic range. The complex multiplication is performed in 32-bits and scaled down so the results go back to the 16-bit range.
+The values are 16-bit integers in the range [-32768,32767] (I believe this is called "1.15 format") and are scaled up to fully utilize the available dynamic range. The complex multiplication is performed in 32-bits and scaled down so the results go back to the 16-bit range.
 
 Plotting the magnitude of the generated phasor exposes the problem:
 
 ![Phasor magnitude problem][phasor_magnitude_problem]{:.center-image}
 
-The magnitude keeps dropping until, by some hazards of fixed-point arithmetic, it reaches a stability point at around $$18839$$ or back to floating-point at $$18839/32768$$ or about $$0.57$$. That means that if we use this phasor to frequency shift our signal, we are going to be attenuating it by that much, something not acceptable in most applications.
+The magnitude keeps dropping until, by some hazards of fixed-point arithmetic, it reaches a stability point at around 18839 or back to floating-point at 18839/32768 = 0.57. That means that if we use this phasor to frequency-shift our signal, we are going to be attenuating it by that much, something not acceptable in most applications.
 
 There are a number of ways to overcome this problem. One of them we can find in GNU Radio's [rotator][rotator]:
 
@@ -127,13 +136,13 @@ gr_complex rotate(gr_complex in)
 }
 {% endhighlight %}
 
-After a number of iterations (512) the magnitude of the phasor is set back to 1. Why not do this adjustment on every sample? Well, behind the innocent looking ```std::abs``` there is a square root lurking, which is computationally expensive (and a headache in a fixed-point implementation).
+After a number of iterations (512) the magnitude of the phasor is set back to 1. Why not do this adjustment at every iteration? Well, behind the innocent looking ```std::abs``` there is a square root lurking, which is computationally expensive (and a headache in a fixed-point implementation).
 
-But there is one more reason to frown upon this implementation: the periodic adjustment we introduce in our phasor is going to inevitably produce some harmonics, detrimental to its quality. Let's see this next with a modified version of the previous fixed-point code that includes the GNU Radio's rotator magnitude compensation logic:
+But there is one more reason to frown upon this implementation: the periodic adjustment we introduce in our phasor is going to inevitably produce some harmonics, detrimental to its purity. Let's see this next with a modified version of the previous fixed-point code that includes the GNU Radio's rotator magnitude compensation logic:
 
 ![Compensated phasor magnitude][compensated_phasor_magnitude]{:.center-image}
 
-As expected the compensation kicks in every 512 samples bringing the magnitude back to nominal. The mean magnitude is $$32688.45$$ and its standard deviation $$45.89$$. Not bad, but the saw-tooth envelope is going to show up in the phasor's FFT:
+As expected the compensation kicks in every 512 samples bringing the magnitude back to nominal. The mean magnitude is 32688.45 and its standard deviation 45.89. Not bad, but the saw-tooth envelope is going to show up in the phasor's FFT:
 
 ![Compensated phasor FFT][compensated_phasor_fft]{:.center-image}
 
@@ -141,10 +150,10 @@ Sure enough, it shows as harmonics of 96000/512 or 187.5 Hz centered around the 
 
 ## Proposal for an alternative fixed-point implementation
 
-Let's see if we can do better than this, both in terms of signal quality and computation complexity. First of all we need to understand why the phasor is decreasing its magnitude with each iteration. The reason is because ```phase_per_sample``` in the example is $$p_0 = 32138+j6393$$, that has a magnitude $$m_0 \approx 32767.69$$, a bit short of $$32768$$. Then, at iteration $$n$$ the attenuation factor is going to be $$(m_0-32768)^n$$. If we attempt to increase a bit the magnitude of this value we go to a ```phase_per_sample``` of $$p_1 = 32139+j6393$$, with a magnitude $$m_1 \approx 32768.67$$, a bit higher than $$32768$$ introducing a gain of $$(m_1-32768)^n$$ with each iteration. Fixed-point quantization is not working out well for us. In fact the only possible ```phase_per_sample``` that produce an exact magnitude of $$32768$$ in 16-bit arithmetic are the trivial $$-32768$$ (corresponding to a frequency shift of $$\pm f_s/2$$) and $$-j32768$$ (frequency shift of $$3 f_s/4$$ and also $$- f_s/4$$).
+Let's see if we can do better than this, both in terms of signal quality and computation complexity. First of all we need to understand why the phasor is decreasing its magnitude with each iteration. The reason is because ```phase_per_sample``` in the example code is 32138+j639 (let's call this value $$p_0$$). It has a magnitude $$m_0 \approx $$ 32767.69, a bit short of 32768. This difference, even small, is going to accumulate after each iteration, producing an exponential effect. At iteration $$n$$ the attenuation factor is going to be $$(m_0-32768)^n$$. We can try to increase a bit the magnitude of this value, using a ```phase_per_sample``` of 32139+j6393 ($$p_1$$), with a magnitude $$m_1 \approx$$ 32768.67, a bit higher than 32768, introducing a gain of $$(m_1-32768)^n$$ with each iteration. Fixed-point lack of accuracy is not working out well for us. In fact the only possible ```phase_per_sample``` values that produce an exact magnitude of 32768 in 16-bit arithmetic are the trivial -32768 (corresponding to a frequency shift of $$\pm f_s/2$$) and -j32768 (frequency shift of $$3 f_s/4$$, equivalent to $$- f_s/4$$).
 
 The trick I'm proposing here is to play with these two values $$p_0$$ and $$p_1$$, one that is a notch below the ideal magnitude of
-$$32768$$ and one that is a notch above it. We are going to detect the magnitude of the phasor at each iteration (we don't need to compute the square root, the squared magnitud would do) and, in some sort of closed-loop control system, we are going to use $$p_1$$ when the magnitud is lower than the ideal and $$p_0$$ the other way around.
+32768 and one that is a notch above it. We are going to detect the magnitude of the phasor at each iteration (we don't need to compute the square root, the squared magnitude would do) and, in some sort of closed-loop control system, we are going to use $$p_1$$ when the magnitude is lower than the ideal and $$p_0$$ the other way around.
 
 The code would look like this:
 
@@ -152,33 +161,36 @@ The code would look like this:
 ...
 
 std::complex<int16_t> phasor(32767, 0);
-std::complex<int16_t> p[2];
-p[0] = ... // Compute p_0, with magnitude slightly smaller than 32768
-p[1] = ... // Compute p_1, with magnitude slightly bigger than 32768
+std::complex<int16_t> p0 = ... // Compute p_0, with magnitude slightly smaller than 32768
+std::complex<int16_t> p1 = ... // Compute p_1, with magnitude slightly bigger than 32768
 
-std::cout << "p_0: " << p[0] << std::endl;
-std::cout << "p_1: " << p[1] << std::endl;
+void frequency_shift(const std::complex<int16_t>* input_signal,
+                     std::complex<int16_t>* output_signal,
+                     unsigned int n_samples)
+{
+    for (unsigned int i=0; i < n_samples; i++) {
+        // Rotate the input signal
+        output_signal[i] = multiply_i16(input signal[i], phasor);
 
-unsigned int p_to_use = 1;
-
-for (unsigned int i=0; i<100000; i++) {
-    phasor = multiply_i16(phasor, p[p_to_use]);
-
-    {
-        // Calculate the squared magnitude of the phasor
-        int32_t x = (int32_t)std::real(phasor);
-        int32_t y = (int32_t)std::imag(phasor);
-        int32_t m = x*x + y*y;
-        if (m > 32768*32768) {
-            p_to_use = 0; // Too big, use the small one
-        } else {
-            p_to_use = 1; // Too small, use the big one
+        // Rotate our phasor
+        std::complex<int16_t> phase_per_sample;
+        {
+            // Calculate the squared magnitude of the phasor
+            int32_t x = (int32_t)std::real(phasor);
+            int32_t y = (int32_t)std::imag(phasor);
+            int32_t m = x*x + y*y;
+            if (m > 32768*32768) {
+                phase_per_sample = p0; // Too big, use the small one
+            } else {
+                phase_per_sample = p1; // Too small, use the big one
+            }
         }
+        phasor = multiply_i16(phasor, phase_per_sample);
     }
 }
 {% endhighlight %}
 
-The mean magnitude in this case is $$32769.05$$ and standard deviation $$1.68$$. Really good, but what's even better is how this phasor looks in the frequency domain:
+The mean magnitude in this case is 32769.05 and standard deviation 1.68. Really good, but what's even better is how this phasor looks in the frequency domain:
 
 ![Proposed phasor FFT][proposed_phasor_fft]{:.center-image}
 
@@ -186,17 +198,16 @@ It's almost as good as it can get taking into account the unavoidable quantizati
 
 ## Notes
 
-First notice that this proposed implementation requires the computation of the squared modulus of the phasor with each iteration, at a cost of two multiplications, one addition and one more comparison to decide between the two pre-computed phase-per-sample values. If this is too expensive for our hardware we can fall in the temptation of adjusting the phasor not every sample but every n samples. This will affect the quality of our signal with the introduction of harmonics at $$f_s/n$$ as shown for the GNU Radio's rotator.
+First notice that this proposed implementation requires the computation of the squared magnitude of the phasor with each iteration, at a cost of two multiplications, one addition and one more comparison to decide between the two pre-computed phase-per-sample values. If this is too expensive for our hardware we can fall in the temptation of adjusting the phasor not every sample but every n samples. This will affect the quality of our signal with the introduction of harmonics at $$f_s/n$$ as shown for the GNU Radio's rotator.
 
-Second, this implementation fails to work for shifts very close to $$0$$ or close to $$+f_s/4$$. The reason is because these frequencies will produce a $$p_0 = 32767$$ and $$j 32767$$ respectively. In these cases we can't find their corresponding $$p_1$$ with a magnitude slightly larger than $$32768$$ since we are already at the end of the representable 16-bit range. Those cases will need to be handled individually. When $$f_\Delta$$ is near 0 we can approximate it to 0 and just do nothing. On the other hand frequency shifts close to $$+f_s/4$$ can be approximated to exactly one quarter of $$f_s$$ and we can implement an specific one-quarter frequency shifter that plays with the signs of the real and complex components of the input signal and avoids arithmetic operations all together.
+Second, this implementation fails to work for shifts very close to 0 or $$+f_s/4$$. The reason is because these frequency shifts produce a $$p_0 =$$ 32767 and $$p_0 =$$ j 32767 respectively. In these cases we can't find their corresponding $$p_1$$ with a magnitude slightly larger than 32768 since we are already at the end of the representable 16-bit range. Unfortunately those cases will need to be handled individually. When $$f_\Delta$$ is near 0 we can round it to 0 and just do the best thing there is to be done in DSP: nothing. On the other hand, frequency shifts close to $$+f_s/4$$ can be rounded to exactly one quarter of $$f_s$$, which can be implemented by just playing with the signs of the real and complex components of the input signal and avoid arithmetic operations all together (see [Digital Signal Processing Tricks - Frequency Translation without multiplication][f_4] by Richard Lyons).
 
-And third, there is a bit of inaccuracy to the frequency shift. In our case the $$p_0 = 32138+j6393$$ and $$p_1 = 32139+j6393$$ correspond exactly to frequency shifts equal to 3000.16 and 3000.07 Hz respectively, following the formula $$\dfrac{f_s}{2\pi}atan2(imag(p), real(p))$$. If this inaccuracy is not acceptable then we can apply some frequency correction to the phasor but again minding that periodic corrections are going to introduce harmonics in our phasor.
-
-The bottom line for this article is that in digital signal processing, as well as in analog, the more gentle we are to the signal, the better.
+And third, there is a bit of inaccuracy to the frequency shift. In our case the $$p_0 =$$ 32138+j6393 and $$p_1 =$$ 32139+j6393 correspond exactly to frequency shifts equal to 3000.16 and 3000.07 Hz respectively, using the formula $$\dfrac{f_s}{2\pi}atan2(imag(p), real(p))$$. If this inaccuracy is not acceptable then we can apply some frequency correction to the phasor but again minding that periodic corrections are going to introduce harmonics in our phasor.
 
 [fourier]:             https://en.wikipedia.org/wiki/Fourier_series
 [spherical_cow]:       http://www.uscibooks.com/harte.htm
 [rotator]:             https://github.com/gnuradio/gnuradio/blob/master/gr-blocks/include/gnuradio/blocks/rotator.h
+[f_4]:                  https://www.embedded.com/design/configurable-systems/4007186/2/Digital-Signal-Processing-Tricks--Frequency-Translation-without-multiplication
 
 [phasor_magnitude_problem]:     /images/Frequency_shift/phasor_magnitude_problem.png
 [compensated_phasor_magnitude]: /images/Frequency_shift/compensated_phasor_magnitude.png
