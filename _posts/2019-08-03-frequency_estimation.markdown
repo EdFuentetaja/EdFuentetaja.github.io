@@ -108,9 +108,9 @@ $$S_k=A e^{j \theta} \sum_{n=0}^{N-1}{e^{j 2 \pi n (f/fs - k/N)}} = A e^{j \thet
 
 Thanks to the [geometric sum formula][geometric_series], making $$r = e^{j 2 \pi (f/fs - k/N)}$$ we get
 
-$$S_k=A e^{j \theta} \dfrac{1-r^n}{1-r} = A e^{j \theta} \dfrac{1-e^{j 2 \pi N f/fs} e^{j 2 \pi k}}{1 - e^{j 2 \pi f/fs} e^{-j2 \pi k/N}}$$
+$$S_k=A e^{j \theta} \dfrac{1-r^N}{1-r} = A e^{j \theta} \dfrac{1-e^{j 2 \pi N f/fs} e^{-j 2 \pi k}}{1 - e^{j 2 \pi f/fs} e^{-j 2 \pi k/N}}$$
 
-where luckily $$e^{j 2 \pi k}$$ is 1 for all values of $$k$$. Making $$a = e^{j 2 \pi f/fs}$$ and $$b = e^{j 2 \pi/N}$$ then
+where luckily $$e^{-j 2 \pi k}$$ is 1 for all values of $$k$$. Making $$a = e^{j 2 \pi f/fs}$$ and $$b = e^{j 2 \pi/N}$$ then
 
 $$S_k=A e^{j \theta} \dfrac{b^k(1-a^N)}{b^k-a}$$
 
