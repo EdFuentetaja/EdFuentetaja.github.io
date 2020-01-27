@@ -48,7 +48,7 @@ phasor[0] = 1
 phasor[i] = phasor[i-1]$$(cos(2 \pi f_\Delta/f_s)+j sin(2 \pi f_\Delta/f_s))$$
 
 So, we only need one complex multiplication per sample and we avoid altogether the need for any pre-computed table. A complex multiplication can be implemented with four scalar multiplications plus two additions. In some CPU architectures (I'm thinking SIMD) this can be accomplished with ease and might be better performing than a table implementation since we avoid memory accesses and cache misses.
-However there is a caveat here. It shows quite dramatically in a typical fixed-point implementations like this one:
+However there is a caveat here. It shows quite dramatically in a typical fixed-point implementation like this one:
 
 {% highlight c %}
 #include <iostream>
