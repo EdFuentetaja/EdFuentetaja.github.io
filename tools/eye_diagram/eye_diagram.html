@@ -215,7 +215,8 @@ function onPageLoad()
     phaseGainControl.value = phaseGain;
     phaseGainControl.oninput = function() {
         phaseGain = parseFloat(phaseGainControl.value);
-        redrawAll();
+        visualizeEye(eyeCanvas, data, sps, offset, fromSample, toSample, phaseGain);
+        visualizeZoom(zoomCanvas, data, sps, offset, fromSample, toSample, phaseGain);
     }
 
     eyeCanvas = document.getElementById('eyeCanvas');
@@ -319,7 +320,7 @@ function onPageLoad()
 function redrawAll()
 {
     visualizeEye(eyeCanvas, data, sps, offset, fromSample, toSample, phaseGain);
-    visualizeWave(waveCanvas, data, offset, fromSample, toSample, phaseGain);
+    visualizeWave(waveCanvas, data, offset, fromSample, toSample);
     visualizeZoom(zoomCanvas, data, sps, offset, fromSample, toSample, phaseGain);
 }
 
@@ -330,7 +331,7 @@ function redrawEye()
 
 function redrawWave()
 {
-    visualizeWave(waveCanvas, data, offset, fromSample, toSample, phaseGain);
+    visualizeWave(waveCanvas, data, offset, fromSample, toSample);
 }
 
 function redrawZoom()
@@ -374,7 +375,7 @@ function readFile(e) {
     reader.readAsBinaryString(file);
 }
 
-function visualizeWave(canvas, floats, offset, fromSample, toSample, phaseGain)
+function visualizeWave(canvas, floats, offset, fromSample, toSample)
 {
     var ctx = canvas.getContext("2d");
     var w = canvas.width;
@@ -410,7 +411,8 @@ function visualizeWave(canvas, floats, offset, fromSample, toSample, phaseGain)
     ctx.strokeStyle = 'rgba(0, 0, 100, 1.0)';
     ctx.lineWidth = '1';
 
-    var y_scale = h*phaseGain/(2.0*Math.PI);
+    var gain = 1.0;
+    var y_scale = h*gain/(2.0*Math.PI);
 
     ctx.beginPath();
     var x = 0;
