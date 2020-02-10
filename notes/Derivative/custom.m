@@ -12,7 +12,6 @@ SSL=zeros(1, numel(KL));
 for ii=(0:N-1)
   SS=SS+exp(j*2*pi*K*(-f1+df*ii)/fs);
   SSL=SSL+exp(j*2*pi*KL*(-f1+df*ii)/fs);
-  ff = ff+df;
 end
 
 figure(1);
@@ -77,9 +76,7 @@ legend("Original signal", "Central-difference", "location", "northwest");
 
 figure(61);
 clf;
-plot(real(DSS));
-h = findobj(gca, 'type', 'line');
-set(h, 'LineWidth', 4)
+plot(real(DSS), 'LineWidth', 4);
 hold on;
 plot(real(DWSS));
 grid on;
@@ -104,13 +101,14 @@ B=B.*hamming(numel(B));
 [H W]=freqz(B);
 hold on;
 plot([0 1], [0 pi]);
+plot([0 0.1 0.1000001 1], [0 0.1*pi 0 0], ":",'LineWidth', 4);
 plot(W/pi, abs(H));
 grid on;
 xlim([0,0.3]);
 ylim([0,1]);
 ylabel('Amplitude');
 xlabel('Normalized Frequency (x\pi rad/sample)');
-legend("Ideal derivative", "Ad-hoc derivative filter", "location", "northwest");
+legend("Ideal derivative", "Ideal ad-hoc derivative filter", "Actual ad-hoc derivative filter", "location", "northwest");
 
 figure(9);
 plot(B);
