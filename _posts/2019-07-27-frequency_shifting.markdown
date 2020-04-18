@@ -21,7 +21,7 @@ This is demonstrated easily. Thanks to [Fourier][fourier] we know that any signa
 
 $$s(t) = \sum_{n=-\infty}^{\infty} S[n] e^{j 2 \pi n t / P}$$
 
-therefore, a multiplication by the phasor $$e^{j 2 \pi f_\Delta t}$$ produces a frequency shitting to all its frequency components by $$f_\Delta$$ Hz:
+therefore, a multiplication by the phasor $$e^{j 2 \pi f_\Delta t}$$ produces a frequency shifting to all its frequency components by $$f_\Delta$$ Hz:
 
 $$s(t) e^{j 2 \pi f_\Delta t} = \sum_{n=-\infty}^{\infty} S[n] e^{j 2 \pi (n/P + f_\Delta) t}$$
 

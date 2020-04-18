@@ -130,7 +130,7 @@ and the frequency is computed as $$f = \dfrac{f_s}{2 \pi} atan2(imag(a), real(a)
 
 In the absence of noise this is an exact expression, probably not far from Lyon's one where he uses some more tricks to approximate the output from the atan2. However I'm not going to compromise here with accuracy because I believe the computation of this estimate is not expensive, just a few complex multiplications and an atan2 that can be evaluated with the help of lookup tables.
 
-Additionally, having a general expression gives us the freedom to plugin in different frequency bins and combine them to produce better estimates in the presence of noise. For instance, what I'm doing next is find the peak $$k$$ in the spectrum and then do the average of the $$a$$ values for $$i$$ at [-2, -1, 1, 2], a couple of bins before and after the peak. Noise is added in steps to the input signal and the estimated frequency and its error are computed at each SNR level. The result looks like this:
+Additionally, having a general expression gives us the freedom to plug in different frequency bins and combine them to produce better estimates in the presence of noise. For instance, what I'm doing next is find the peak $$k$$ in the spectrum and then do the average of the $$a$$ values for $$i$$ at [-2, -1, 1, 2], a couple of bins before and after the peak. Noise is added in steps to the input signal and the estimated frequency and its error are computed at each SNR level. The result looks like this:
 
 ![frequency estimation error vs SNR][frequency_error_vs_snr]{:.center-image}
 
