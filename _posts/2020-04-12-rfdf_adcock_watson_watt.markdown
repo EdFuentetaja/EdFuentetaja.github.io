@@ -1,5 +1,5 @@
 ---
-title:  "RF direction finding, Adcock/Watson-Watt technique explained"
+title:  "RF direction finding, Adcock/Watson-Watt technique"
 date:   2020-04-12 00:00:00 +0800
 categories: SDR
 excerpt: "A century-year-old technique can find its way into modern SDR."
