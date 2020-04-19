@@ -19,7 +19,7 @@ Those five elements are labeled accordingly as North (N), South (S), East (E), W
 
 ![North and South antenna elements diagram][antenna_diagram]{:.center-image}
 
-East and West elements are combined in the same way, whereas omni is left as it is. There are therefore **three** antenna outputs coming from this array: North _minus_ South (NS), East _minus_ West (EW) and Omni (O). Consequently, we going to need for our radio frontend a receiver with three phase-coherent channels, all tuned to the same frequency. This is one of the advantages of this techniques: with only three channels, as we will see, we can produce a fairly accurate estimation of the angle of arrival of a signal covering 360°, as opposed to other more advanced techniques (I'm looking at you, beam-forming) that require more complicated hardware and antenna setups. Mind that in engineering _complicated_ is often a synonym of _expensive_.
+East and West elements are combined in the same way, whereas omni is left as it is. There are therefore **three** antenna outputs coming from this array: North _minus_ South (NS), East _minus_ West (EW) and Omni (O). Consequently, we are going to need for our radio frontend a receiver with three phase-coherent channels, all tuned to the same frequency. This is one of the advantages of this techniques: with only three channels, as we will see, we can produce a fairly accurate estimation of the angle of arrival of a signal covering 360°, as opposed to other more advanced techniques (I'm looking at you, beam-forming) that require more complicated hardware and antenna setups. Mind that in engineering _complicated_ is often a synonym of _expensive_.
 
 With this arrangement, let's go with the classic diagram depicting a floor plan of our antenna array and a signal arriving from some particular angle, $$\phi$$:
 
@@ -95,13 +95,13 @@ If we divide the two expression we can recover the angle of arrival easily,
 
 $$\phi = arctan \frac{r_{NS}}{r_{EW}}$$
 
-Or so it seems. The trouble here is that if we care to know what's the quadrant our $$\phi$$ is in, we need to know what's the "sign" of both $$r_{NS}$$ and $$r_{EW}$$ and this is a tricky question because those are radio signals, so it doesn't make sense to ask about their sign by itself. We could, however, distinguish when both $$r_{NS}$$ and $$r_{EW}$$ are in phase or in opposition:
+Or so it seems. The trouble here is that if we care to know what's the quadrant our $$\phi$$ is in, we need to know what's the "sign" of both $$r_{NS}$$ and $$r_{EW}$$ and this is a tricky question because those are radio signals that we handle in our SDR implementation as a series of complex IQ samples, so it doesn't make sense to ask about their sign by itself. We could, however, distinguish when both $$r_{NS}$$ and $$r_{EW}$$ are in phase or in opposition:
 
 ![Signs at quadrants][quadrants]{:.center-image}
 
-That will give us the ability to say if our signal is coming from either quadrants I, III or II, IV, but no more than that.
+That will give us the ability to say if our signal is coming from either quadrants I, III or II, IV, but no more than that...
 
-That's true if we limit ourselves to only work with $$r_{EW}$$ and $$r_{NS}$$, but remember that we still have one more input signal, $$r_O$$. This is the key to help us resolve exactly what quadrant we are in, let's see how.
+Or is it? Well, that's true if we limit ourselves to only work with $$r_{EW}$$ and $$r_{NS}$$, but remember that we still have one more input signal, $$r_O$$. This is the key to help us resolve exactly what quadrant we are in, let's see how.
 
 It's useful to consider a phasor from our input signal $$r$$, let's say it's its the phasor corresponding to its strongest frequency component. If we represent together the phasors of all the signals coming to our antenna elements we would see something like this:
 
