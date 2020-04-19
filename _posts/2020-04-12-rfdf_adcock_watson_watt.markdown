@@ -101,13 +101,13 @@ Or so it seems. The trouble here is that if we care to know what's the quadrant 
 
 That will give us the ability to say if our signal is coming from either quadrants I, III or II, IV, but no more than that...
 
-Or is it? Well, that's true if we limit ourselves to only work with $$r_{EW}$$ and $$r_{NS}$$, but remember that we still have one more input signal, $$r_O$$. This is the key to help us resolve exactly what quadrant we are in, let's see how.
+Or is it? Well, that's true if we limit ourselves to only work with $$r_{EW}$$ and $$r_{NS}$$, but remember that we still have one more input signal, $$r_O$$. This is the key to help us resolve exactly what quadrant we are in. Let's see how.
 
-It's useful to consider a phasor from our input signal $$r$$, let's say it's its the phasor corresponding to its strongest frequency component. If we represent together the phasors of all the signals coming to our antenna elements we would see something like this:
+It's going to be useful to consider a phasor from our input signal $$r$$. Let's say it's its the phasor corresponding to its strongest frequency component. If we represent together the phasors of all the signals coming to our antenna elements we would see something like this:
 
 ![Phasors for each of signals at the antenna elements, first quadrant][phase_diagram_1]{:.center-image}
 
-Following with our example where our signal is coming at an angle $$\phi$$ that is in the first quadrant, and considering that our phasors are rotating counter-clockwise, we get that, respective to $$r_O$$, $$r_N$$ is ahead by a bit and $$r_N$$ is behind by the same bit. The difference $$r_{NS}$$ is logically at 90° with $$r_O$$ and its magnitude goes with $$2 sin\phi$$. Similarly, $$r_E$$ is ahead of $$r_O$$, this time by a significant amount and $$r_W$$ is behind by the same amount, making $$r_{EW}$$ again at 90° with $$r_O$$ and with a magnitude that this time goes with $$2 cos\phi$$. We see that both $$r_{NS}$$ and $$r_{EW}$$ are in phase, which is the expected in the first quadrant.
+Following with our example where our signal is coming at an angle $$\phi$$ that is in the first quadrant, and considering that our phasors are rotating counter-clockwise, we get that, respective to $$r_O$$, $$r_N$$ is ahead by a bit and $$r_S$$ is behind by the same bit. The difference $$r_{NS}$$ is logically at 90° with $$r_O$$ and its magnitude goes with $$2 sin\phi$$. Similarly, $$r_E$$ is ahead of $$r_O$$, this time by a significant amount and $$r_W$$ is behind by the same amount, making $$r_{EW}$$ again at 90° with $$r_O$$ and with a magnitude that this time goes with $$2 cos\phi$$. We see that both $$r_{NS}$$ and $$r_{EW}$$ are in phase, which is the expected in the first quadrant.
 
 So far so good, let's see what we get now for a $$\phi$$ in the second quadrant:
 
