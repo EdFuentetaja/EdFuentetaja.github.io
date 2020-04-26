@@ -11,7 +11,7 @@ I was involved some time ago on a project that used the Watson-Watt technique to
 
 We are standing here upon the gigantic shoulders of Frank Adcock and Sir Robert Watson-Watt, WWII decisive heroes and complete no-ones outside radio or engineering circles (well, at least Sir Robert has a beautiful statue at his hometown). Why we are living in a society that picks their heroes among athletic games and show business celebrities, relegating the rest to oblivion will be the matter for another rambling. Today let's remember that Sir Robert is non other than the father of radar and [his biography][robert_watson_watt] explains how he experimented with the [Adcock antenna array][adcock_antenna] in the early 1920s, patented not long ago by Frank Adcock. The stroke of genius of Sir Robert was to make use of an oscilloscope to display graphically the angle of arrival of the radio signals. I can only imagine that using an oscilloscope in the 1920s would be equivalent to making use of a quantum computer or a similarly esoteric device in our more modern days.
 
-But let's dive into the details of this technique, which I believe is quite amazing in its simplicity. The configuration I'm going to consider for the Adcock antenna array is the one composed of five elements:
+But let's dive into the details of this technique, which I believe is quite elegant. The configuration I'm going to consider for the Adcock antenna array is the one composed of five elements:
 
 ![Adcock array with 5 elements][adcock_array]{:.center-image}
 
@@ -51,7 +51,7 @@ earlier that it does O, therefore the signal that E sees should be given by:
 
 $$r_E = m(t + \frac{R}{\nu} cos \phi) e^{j 2 \pi f_c (t+\frac{R}{\nu} cos \phi)}$$
 
-It's time now to take another card from under under sleeve, this time is the "narrow-band assumption." We claim that our m(t) signal is changing slowly, at least compared to the speed of change of our carrier frequency $$f_c$$. To see how this is fair, let's give some numbers, let's say that we make R equal to half our wavelength $$\lambda$$, and let's say we are considering WiFi signals at 2.4 GHz, then our R is about 6.25 cm, which means a worst case time difference of about 0.2 nanoseconds to our radio signal. Considering that our WiFi signal has a bandwidth of 40 MHz, the highest frequency it's going to carry is 20 MHz, which has a period of 50 ns. The compromise here is to say that a sinusoid with period 50 ns is not going to change much from time t to time t+0.4 ns. In fact we can say that the maximum change we are going to see with this delay in this example is about 2.5% ($$sin(2 \pi 0.2/50) \approx 0.025$$).
+It's time now to take another card from under under sleeve, this time is the "narrow-band assumption." We claim that our m(t) signal is changing slowly, at least compared to the speed of change of our carrier frequency $$f_c$$. To see how this is fair, let's give some numbers, let's say that we make R equal to one quarter of our wavelength $$\lambda$$, and let's say we are considering WiFi signals at 2.4 GHz, then our R is about 3.125 cm, which means a worst case time difference of about 0.1 nanoseconds to our radio signal. Considering that our WiFi signal has a bandwidth of 40 MHz, the highest frequency it's going to carry is 20 MHz, which has a period of 50 ns. The compromise here is to say that a sinusoid with period 50 ns is not going to change much from time t to time t+0.1 ns. In fact we can say that the maximum change we are going to see with this delay in this example is about 1% ($$sin(2 \pi 0.1/50) \approx 0.0125$$).
 
 Then we can simplify and say that:
 
@@ -83,13 +83,13 @@ and on the same fashion
 
 $$r_{NS} = r_O 2 j sin(2 \pi \frac{R}{\lambda_c} sin \phi)$$
 
-This expresion can be simplified further. If we make $$R$$ significantly smaller than $$\lambda_c$$ we can make $$2 \pi \frac{R}{\lambda_c} cos \phi$$ small, so much so that we can claim that $$sin(x) \approx x$$ for small values of $$x$$, and
+This expresion can be simplified further. If we make $$R$$ significantly smaller than $$\lambda_c$$ we can make $$2 \pi \frac{R}{\lambda_c}$$ small, so much so that we can claim that $$sin(x) \approx x$$ for small values of $$x$$, and
 
 $$r_{EW} \approx r_O j 4 \pi \frac{R}{\lambda_c} cos \phi$$
 
 $$r_{NS} \approx r_O j 4 \pi \frac{R}{\lambda_c} sin \phi$$
 
-Those expressions are saying that $$r_{EW}$$ and $$r_{NS}$$ are either 90° ahead or behind of $$r_O$$ and their magnitude is in proportion to that of $$r_O$$ by a factor of the cosine and sine of the signal's angle of arrival $$\phi$$, respectively.
+Those expressions are saying that $$r_{EW}$$ and $$r_{NS}$$ are either 90° ahead or behind of $$r_O$$ (by the works of the imaginary unit $$j$$ and the sign of the cosine and sine) and their magnitude is in proportion to that of $$r_O$$ by a factor of the, respectively, cosine and sine of the signal's angle of arrival $$\phi$$.
 
 If we divide the two expression we can recover the angle of arrival easily,
 
