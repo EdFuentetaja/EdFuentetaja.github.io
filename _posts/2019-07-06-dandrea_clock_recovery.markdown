@@ -41,7 +41,7 @@ It's a bit noisy but its eye diagram comes out well defined and it should not be
 
 ![Eye diagram for the example signal's differential phase][diff_phase_eye]{:.center-image}
 
-Surely enough, the spectrum of $$Re\{\dot{c}(t)\}$$, the derivative of the real component of $$\tilde{c}(t)$$, shows a strong peak at 9600, our symbol rate:
+Surely enough, the spectrum of $$Re\{\dot{c}(t)\}$$, the real component of the derivative of $$\tilde{c}(t)$$, shows a strong peak at 9600, our symbol rate:
 
 ![Spectrum of the derivative of the real component of c(t)][s_spectrum]{:.center-image}
 
