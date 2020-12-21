@@ -9,7 +9,7 @@ header:
 
 As a continuation of the [previous article][rfdf_adcock_watson_watt] on this subject, I'm going to discuss this time some practical considerations based on my experience with this direction finding (DF) technique.
 
-The analysis of this technique yielded a few straightforward expressions:
+The analysis of this technique yielded a straightforward expression for $$\phi$$, the estimated angle of arrival of our signal of interest:
 
 $$\phi = atan2(sign_{NS} \|r_{NS}\|, sign_{EW} \|r_{EW}\|)$$
 
@@ -35,9 +35,9 @@ We claim that the highest frequency component of our base band signal is much lo
 
 We can plugin some numbers to get the feeling of it: in the 70 cm band with a signal of 25 kHz of bandwidth, the value we get from our little formula is $$e^{j1.8e-4}$$, which is a rotation of 0.01°. Very little in comparison.
 
-### Ratio antenna array radius R / signal wavelength is small
+### The ratio antenna array radius (R) to signal wavelength is small
 
-With small values of $$2 \pi \frac{R}{\lambda}$$ we can simplify a $$sin$$ from our expressions and produce a very compact one that involves just an arctan operation. This is probably the trickiest one. A reason why it might not be the case that this ratio is not so small is because we might want our DF setup to operate in a wide range of frequencies and being our antenna array a rigid installation, we might be pushing the limits at higher frequencies (lower $$\lambda$$).
+With small values of $$2 \pi \frac{R}{\lambda}$$ we can simplify a $$sin$$ from our expressions and produce the very compact one at the top of this article, that involves just an arctan operation. This is probably the trickiest one. A reason why it might not be the case that this ratio is not so small is because we might want our DF setup to operate in a wide range of frequencies and being our antenna array a rigid installation, we might be pushing the limits at higher frequencies (lower $$\lambda$$).
 
 Another reason might be, and I'm not an antenna expert, that antenna arrays with elements spaced so close in comparison to the signal's wavelength, have strong electromagnetic interactions and each individual element pattern is not individual any more but affected greatly by the other elements. How this interaction plays, whether positively or negatively, I would like to understand better (but my bet is that it's going to be negative).
 
@@ -47,7 +47,7 @@ $$r_{NS} = r_O 2 j sin(2 \pi \frac{R}{\lambda_c} sin \phi)$$
 
 $$r_{EW} = r_O 2 j sin(2 \pi \frac{R}{\lambda_c} cos \phi)$$
 
-Let's run some simulations with different values or $$R/\lambda$$ to see what we get.
+Let's run some simulations with different values or $$R/\lambda$$ next to see what we get.
 
 Using the example from [Mr Pellejero's technical article][adcock_watson_watt_by_ismael_pellejero], at a frequency of 5 MHz we get a $$\lambda$$ of 60 m. Placing our antenna elements at R = 7.5 m, or $$\lambda/8$$, we get $$2 \pi \frac{R}{\lambda} = 0.78$$ and making $$r_O = 1$$, our $$r_{NS}$$ and $$r_{EW}$$ look like this:
 
@@ -69,7 +69,7 @@ Or does it? No, not really.
 
 ## Accuracy and some experimental results
 
-Sorry for giving false hope but it isn't going to work out. All said is correct but the problem here is that the points with the maximum slope are also the point where our $$r$$ is _small_. Being small means that the readings are most likely dominated by noise, not the signal. So on the one hand we have, let's continue with 90° as an example, a $$r_{NS}$$ strong but dumb and on the other we get $$r_{EW}$$ with random values coming from the noise. It isn't going to look good.
+Sorry for giving false hope but it isn't going to work out. All said is correct but the problem here is that the points with the maximum slope are also the points where our $$r$$ is the _smallest_. Being small means that the readings are most likely dominated by noise, not the signal. So, on the one hand we have, let's continue with 90° as an example, a $$r_{NS}$$ strong but dumb and on the other we get $$r_{EW}$$ with random values coming from the noise. It isn't going to look good.
 
 Before we jump into conclusions, let's see first some results coming from the calibration of a particular Adcok antenna at some particular band:
 
@@ -83,17 +83,17 @@ We get analogous results for $$r_{EW}$$:
 ![Power ratio EW/Omni][power_EW]{:.center-image}
 ![Sine angle EW to Omni][sin_EW]{:.center-image}
 
-In this case the multiplication of the magnitude ratios from the first chart with the sign from the second chart gives us get something that follows a cosine, with some distortions as is expected.
+In this case the multiplication of the magnitude ratios from the first chart with the sign from the second chart would give us something that follows a cosine, with some distortions as expected.
 
-Let me reiterate that the purpose of calibration is to understand those distortions from the textbook sine and cosine ideal shapes. Once we take them into account in our computations they should not be detrimental to the accuracy of our results. The real problem of this technique is the nulls that the antenna array produces at the axis: 0, 90, 180 and 270 degrees. I believe this is the weakest point of this DF technique and its limiting factor to produce a high level of consistent accuracy.
+Let me reiterate that the purpose of calibration is to understand those distortions from the textbook sine and cosine ideal shapes. Once we take them into account in our computations, they should not be detrimental to the accuracy of our results. The real problem of this technique is the nulls that the antenna array produces at 0, 90, 180 and 270 degrees. I believe this is the weakest point of this DF technique and its limiting factor to produce a high level of consistent accuracy.
 
-Is there anything we can do to improve things? Yes, there are a couple of things we can do. If accuracy is the concern, we can spend more money and come up with _two_ sets of Adcock antennas rotated 45° respective of each other, so when our transmitter is at $$90 n$$ degrees to one of them (low accuracy expected), it will be at $$90 n + 45$$ degrees to the other (not so low accuracy). One could say that, for the cost of two sets of Adcock antennas and two sets of 3 channel coherent radio receivers, one could put together a 6-antenna element beam forming solution with superior accuracy. And that one would be right but there is something very cool you can do with two Adcock antennas that you can't do with a 6 channel beam former: You can [cross the streams!][crossing_the_streams_youtube]
+Is there anything we can do to improve things? Yes, there are a couple of things we can do. If accuracy is the concern, we can spend more money and come up with _two_ sets of Adcock antennas rotated 45° respective of each other, so when our transmitter is at $$90 n$$ degrees to one of them (low accuracy expected), it will be at $$90 n + 45$$ degrees to the other (not so low accuracy). One could say that, for the cost of two sets of Adcock antennas and two sets of 3 channel coherent radio receivers, one could put together a 6-antenna element beam-forming solution with superior accuracy. And that one would be right but there is something very cool you can do with two Adcock antennas that you can't do with a 6 channel beam former: You can [cross the streams!][crossing_the_streams_youtube]
 
 ![Two Adcock antennas setup to do geo-location][crossing_the_streams]{:.center-image}
 
 And by doing so you'll find that you have transcended the realm of direction finding and you are now dwelling with the Gods in the realm of _geo-location_.
 
-There is one more option that occurs to me and this one is easier with your wallet: you filter the noisy DF estimations with a [Kalman filter][kalman_filter], which I believe is ideal is this kind of application, particularly if you are dealing with moving transmitters and you happen to get some idea of their dynamics, such as speed and trajectories they might follow or some constrains on them.
+There is one more option that occurs to me and this one is easier with your wallet: you filter the noisy DF estimations with a [Kalman filter][kalman_filter], which I believe is ideal for this kind of application, particularly if you are dealing with moving transmitters and you happen to get some idea of their dynamics, such as speed and trajectories they might follow or some constrains on them.
 
 I still haven't talked about some implementation details that I believe are interesting. I'll leave that for the next and last article in this series.
 
