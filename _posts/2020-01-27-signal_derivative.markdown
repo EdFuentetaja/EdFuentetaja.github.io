@@ -1,5 +1,5 @@
 ---
-title:  "Signal derivative considered harmful?"
+title:  "Signal Derivative Considered Harmful?"
 date:   2020-01-27 00:00:00 +0800
 categories: SDR
 excerpt: "A faulty signal derivative implementation was enough to crash Mariner I in 1962. Can this monster be tamed?"

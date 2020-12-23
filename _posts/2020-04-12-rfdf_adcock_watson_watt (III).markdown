@@ -1,5 +1,5 @@
 ---
-title:  "RF direction finding, Adcock/Watson-Watt technique (III)"
+title:  "RF Direction Finding, Adcock/Watson-Watt Technique (III)"
 date:   2020-04-26 00:00:00 +0800
 categories: SDR
 excerpt: "Final entry with some implemenation notes."
