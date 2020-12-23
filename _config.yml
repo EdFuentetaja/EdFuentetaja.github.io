@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Cuaderno de Notas"
+title                    : "Notas notables"
 title_separator          : "-"
 name                     : "Ed"
 description              : "Ed Fuentetaja's online notebook."
