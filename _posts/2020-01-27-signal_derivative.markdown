@@ -20,7 +20,7 @@ Unfortunately software bugs are nothing new and they are not going away any time
 
 Why the missing bar (hyphen), or in other words, lack of smoothing over some data, was so critical? This is going to become the main subject of this article as you might have guessed from the title. My thesis here is that the smoothing of the data coming out from the derivative of the radius signal was a critical operation because the derivative is a _dangerous_ operation. The derivative becomes dangerous when we engineers don't take into account one of its side-effects and it is that it _amplifies the noise_. So to be honest to the truth, the real danger, as usual, lays down in our ignorance.
 
-Let's see what's the truth behind this noise amplification statement. Once again we are not threading over unknown territory but instead we are standing over the shoulders of giants. I'm taking the _Differentiators_ section from Richard G. Lyons's [Understanding Digital Signal Processing][understanding_dsp_ch7] as reference and recommended lecture.
+Let's see what's the truth behind this noise amplification statement. Once again we are not treading over unknown territory but instead we are standing over the shoulders of giants. I'm taking the _Differentiators_ section from Richard G. Lyons's [Understanding Digital Signal Processing][understanding_dsp_ch7] as reference and recommended lecture.
 
 With all this preamble, let's now roll up our sleeves and jump once again into the frequency domain with our trusty inverse discrete Fourier transform expression:
 
