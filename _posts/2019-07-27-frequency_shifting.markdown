@@ -117,7 +117,7 @@ Plotting the magnitude of the generated phasor exposes the problem:
 
 ![Phasor magnitude problem][phasor_magnitude_problem]{:.center-image}
 
-The magnitude keeps dropping until, by some hazards of fixed-point arithmetic, it reaches a stability point at around 18839 or back to floating-point at 18839/32768 = 0.57. That means that if we use this phasor to frequency-shift our signal, we are going to be attenuating it by that much, something not acceptable in most applications.
+The magnitude keeps dropping until, by the quirkiness of fixed-point arithmetics, it reaches a stability point at around 18839 or back to floating-point at 18839/32768 = 0.57. That means that if we use this phasor to frequency-shift our signal, we are going to be attenuating it by that much, something not acceptable in most applications.
 
 There are a number of ways to overcome this problem. One of them we can find in GNU Radio's [rotator][rotator]:
 
