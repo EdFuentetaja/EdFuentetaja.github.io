@@ -9,8 +9,8 @@
 locale                   : "en-US"
 title                    : "Notas notables"
 title_separator          : "-"
-name                     : "Ed"
-description              : "Ed Fuentetaja's online notebook."
+name                     : "Eduardo Fuentetaja"
+description              : "Eduardo Fuentetaja's online notebook."
 url                      : "https://edfuentetaja.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 gh_repo                  :
@@ -61,7 +61,7 @@ google_ad_slot           :
 
 # Site Author
 author:
-  name             : "Ed Fuentetaja"
+  name             : "Eduardo Fuentetaja"
   avatar           : "ed-photo.jpg"
   bio              : "Welcome to my notebook"
   location         : "Singapore"

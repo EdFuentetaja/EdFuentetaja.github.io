@@ -75,8 +75,9 @@ The mean, in blue, matches very well the shape of our timing function $$f(\tau)$
 
 My conclusion is that the method works in principle with GMSK signals. I don't want to make this article any longer and I stop here leaving for the next one an evaluation of the method applied to some real AIS signals. I will use the M&M implementation that comes with GNU radio, which will also give me a chance for its analysis.
 
-[^1]: IEEE Transactions on Communications, Vol. COM-24, No. 5, May 1976, pg 516
+## References
 
+[^1]: K. Mueller and M. Muller, "Timing Recovery in Digital Synchronous Data Receivers," in *IEEE Transactions on Communications*, vol. 24, no. 5, pp. 516-531, May 1976, doi: 10.1109/TCOM.1976.1093326.
 
 [funwithelectronics_ais]: http://www.funwithelectronics.com/?id=9
 [matlab_gaussian_filter]: https://www.mathworks.com/help/signal/examples/fir-gaussian-pulse-shaping-filter-design.html
