@@ -117,7 +117,7 @@ Going back to our $$R(k)$$ definition, when applied to a pure noiseless carrier 
 
 $$R(k) = e^{j 2 \pi f_n k}$$
 
-Taking $$k \in [1,M]$$, we see its representation is a "train" of phasors around the unit circumference separated by an angle $$theta = 2 \pi f_n$$:
+Taking $$k \in [1,M]$$, we see its representation is a "train" of phasors around the unit circumference separated by an angle $$\theta = 2 \pi f_n$$:
 
 ![R as phasor][R1]{:.center-image}
 
