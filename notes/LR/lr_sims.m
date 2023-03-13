@@ -1,8 +1,10 @@
 
+pkg load signal
+
 sigma_s_2=20;
 
 n=90;
-m=45;
+m=41;
 fn=0.0001;
 theta_0=30*180/pi;
 
@@ -29,11 +31,10 @@ arg(sum(RR))/(m+1)/pi
 
 
 function v = calculate_var_k(n, k, rho)
+  x = 1/(4*pi*pi*k*k*(n-k)*rho);
   if k<=n/2
-    x = 1/(4*pi*pi*k*k*(n-k)*rho);
     v = x*(k/(n-k) + 1/(2*rho));
   else
-    x = 1/(4*pi*pi*k*k*(n-k)*rho);
     v = x*(1 + 1/(2*rho));
   end
 end
@@ -55,7 +56,7 @@ end
 trials = 1e5;
 
 
-SNR_dbs = (0:0);
+SNR_dbs = (3:3);
 All_CRLBs = zeros(1,numel(SNR_dbs));
 All_LR_errors = zeros(1,numel(SNR_dbs));
 All_MLA_errors = zeros(1,numel(SNR_dbs));
@@ -97,6 +98,9 @@ for jj = (1:numel(SNR_dbs))
     a = 22;
     lr2_error = fn - arg(sum(R(n/2-a:n/2+a)))/(pi*n);
     LR2_errors(end+1) = lr2_error;
+    if mod(ii,1000) == 0
+      fprintf("%d\n", ii);
+    end
   end
   All_CRLBs(jj) = sqrt(3/(2*pi*pi*rho*n*(n*n-1)));
   All_LR_errors(jj) = std(LR_errors);
@@ -123,10 +127,22 @@ for jj = (1:numel(SNR_dbs))
   legend("L&R", "ML approx", "LR 2");
   grid on;
   pause(0.01);
+  
+  figure(2);
+  clf;hold on;semilogy(VV);plot(var(RR))
+  grid on
+  legend("formula", "simulation")
+  xlabel("k")
+  ylabel("var estimated frequency error")
+ 
 end
 
 A=RR-mean(RR);
 CV=(A')*A;
 figure(10)
 imagesc(20*log10(abs(CV))); axis equal;
-colorbar
+axis image
+%colorbar
+xlabel("k")
+ylabel("k")
+set(gca,'YDir','normal')
