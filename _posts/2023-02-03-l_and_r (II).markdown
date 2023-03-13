@@ -29,13 +29,13 @@ $$
 = e^{j 2\pi f_n k} + n_{i+k}^{\prime*} + n_{i}^{\prime*} + n_{i+k}n^{*}_{i}  \tag{1}\label{eq:1}
 $$
 
-Remember that our frequency estimation consist on adding together a bunch of these terms and calculating the angle of the result. It's intuitive then to say that for small gap values $$k$$ our $$e^{j 2\pi f_n k}$$ is going to be near the real axis and the angle of our expression (1) is dominated by the noise components. Larger values of $$k$$ make our $$e^{j 2\pi f_n k}$$ stand out and should produce better estimates of $$f_n$$. The challenge here is that in the $$R$$ sumation there are only a few autocorrelation terms at large $$k$$ (e.g.: with $$N=10$$, there is only one autocorrelation term at gap $$k=9$$, which is $$s_{10} s^{*}_{1}$$). There are, however, many terms at lower $$k$$ (e.g.: there are nine terms at $$k=1$$: $$s_{2} s^{*}_{1}, s_{3} s^{*}_{2}, ... s_{10} s^{*}_{9}$$). So, there is a tension: terms at short gaps are more noisy, but we are adding more, which lower the overall noisyness. Terms at bigger gaps are less noisy, but we have fewer to add, so it's not so clear were is the sweet spot. Let's explore this.
+Remember that our frequency estimation consist on adding together a bunch of these terms and calculating the angle of the result. It's intuitive then to say that for small gap values $$k$$ our $$e^{j 2\pi f_n k}$$ is going to be near the real axis and the angle of our expression (1) is dominated by the noise components. Larger values of $$k$$ make our $$e^{j 2\pi f_n k}$$ stand out and should produce better estimates of $$f_n$$. The challenge here is that in the $$R$$ summation there are only a few auto-correlation terms at large $$k$$ (e.g.: with $$N=10$$, there is only one auto-correlation term at gap $$k=9$$, which is $$s_{10} s^{*}_{1}$$). There are, however, many terms at lower $$k$$ (e.g.: there are nine terms at $$k=1$$: $$s_{2} s^{*}_{1}, s_{3} s^{*}_{2}, ... s_{10} s^{*}_{9}$$). So, there is a tension: terms at short gaps are more noisy, but we are adding more, which lowers the overall noisiness. Terms at bigger gaps are less noisy, but we have fewer to add, so it's not so clear were is the sweet spot. Let's explore this.
 
 The term $$M$$ is the upper bound for the gaps we are going to use. Based on the previous, I had the idea (most likely not original) that there should also be a lower bound:
 
 $$\hat{f_n} = {\frac{1}{\pi(M+1)}} \operatorname{arg} \left\{ \sum_{i=m_{1}}^{m_{2}} R(k) \right\}$$
 
-It will be interesting to see what's the expected accuracy in the frequency estimate with different $$m1, m2$$ values. I don't have the math belt level required to come up with the analytical expression, but fortunately these days we have computers to help us run a bunch of simulations: adding white noise to a sinusoid to make its SNR equal to 3 dB and with $$N=90$$, the following chart represents the estimated RMS error with 10<sup>5</sup> trials for different values of $$m1$$ and $$m2$$:
+It will be interesting to see what's the expected accuracy in the frequency estimate with different $$m1, m2$$ values. I don't have the math belt level required to come up with the analytical expression, but fortunately these days we have computers to help us run a bunch of simulations: adding white noise to a sinusoid to make its SNR equal to 3 dB and with $$N$$=90 samples, the following chart represents the estimated RMS error with 100k trials for different values of $$m1$$ and $$m2$$:
 
 ![RMS error at 3 dB][rms_3db]{:.center-image}
 
@@ -49,17 +49,17 @@ It's remarkable to see that lowest RMS error (about 3.2e-4 in normalized frequen
 
 ![RMS error with m1=1][rms_m1_1]{:.center-image}
 
-The practical difference between these points is very small and is dependent with the actual SNR of our signal. The number of computations at $$m2$$=41 is significantly smaller than at $$m2$$=79, so, under these results, it seems sensible to abandon the idea of having the two bounds $$m1,m2$$ and keep the original L&R formulation with a choice of $$M$$ a bit below $$N/2$$.
+The practical difference between these points is very small and is dependent with the actual SNR of our signal. The number of computations at $$m2$$=41 is significantly smaller than at $$m2$$=79, so, under these results, it seems sensible to abandon the idea of having two bounds $$m1,m2$$. We should go back to the original L&R formulation with a single parameter $$M$$, making it a bit below $$N/2$$.
 
-To complete the analysis, let's take a look at some simulations. Next one is run with 100k trials, no frequency offset applied to the signal (so the signal is a carrier with a frequency of 0 Hz, or just a constant value), $$N$$=90 and $$M$$=41, at different SNR points:
+To complete the analysis, let's take a look at some simulations. Next one is run with 100k trials, no frequency offset is applied to the signal (so the signal is a carrier with a frequency of 0 Hz, or just a constant value), $$N$$=90 and $$M$$=41, at different SNR points:
 
 ![RMS error vs SNR][rms_error_snr]{:.center-image}
 
-The straight line that we see in this log plot is the signature of the quality of this estimate. The mayor constraint that we are going to find comes from the maximum allowed frequency error. In this case with $$M$$=41 we are limited by a frequency error of 0.5/41 = 0.012195 normalized frequency units. We can see that on the following chart:
+The straight line that we see in this log plot is the signature of the quality of this estimate. The mayor constraint that we are going to find comes from the maximum tolerated frequency error. In this case with $$M$$=41 we are limited by a frequency error of 0.5/41 = 0.012195 normalized frequency units. We can see that on the following chart:
 
 ![RMS error vs frequency][rms_error_freq]{:.center-image}
 
-The SNR is fixed to 3 dB and $$N$$ and $$M$$ are again 90 and 41. Zooming in we get a better insight:
+The SNR is fixed to 3 dB and, again, $$N$$=90 and $$M$$=41. Zooming in we get a better insight:
 
 ![RMS error vs frequency zoom][rms_error_freq_2]{:.center-image}
 
@@ -69,11 +69,11 @@ In practice it looks that we have a bit more margin and the method is working in
 
 Trying different ideas, I was able to calculate the exact formula for the RMS error derived from individual $$R(k)$$. As I will explain later, this turned out not very useful. Anyway, it might be in a future work and I have decided to keep it.
 
-We need to consider the additive noise component and noise and signal power, so we reboot the analysis defining our complex sinusoid as:
+We start by realizing that we need to consider the additive noise component and noise and signal power, so we reboot the analysis defining our complex sinusoid as:
 
 $$s_{i} = \sigma_{s} e^{j(2 \pi f_{n} i + \theta_{0})}, 1 \leq i \leq N$$
 
-with power $$\sigma^{2}_{s}$$. We keep our definition of our auto-correlation terms $$R(k)$$:
+with power $$\sigma^{2}_{s}$$. We keep the definition of our auto-correlation function $$R(k)$$:
 
 $$
 R(k) \triangleq {\frac{1}{N-k}}\sum_{i=1}^{N-k} r_{i+k} r^{*}_{i}              \tag{2}\label{eq:2}
@@ -129,9 +129,9 @@ $$
 = f_{n} + {\frac{\operatorname{arg}(\sigma^{2}_{s} + e^{-j2 \pi f_{n} k}(T_{1}(k) + T_{2}(k)))}{2 \pi k}}           \tag{4}\label{eq:4}
 $$
 
-So it makes evident that the noise in our estimate comes from the $$T_{1}$$ and $$T_{2}$$ components.
+This makes evident that the noise in our estimate comes from the $$T_{1}$$ and $$T_{2}$$ components.
 
-We are going to tackle $$T_{1}$$ first. We can't make more progress without realizing that that there is overlap in $$T_{1}(k)$$ summations. To make it explicit we need to split the intervals in $$[1,k]$$, $$[k+1,N-k]$$ and $$[1,N-2k]$$, $$[N-2k+1,N-k]$$
+We are going to tackle $$T_{1}$$ first. We can't make more progress without realizing that that there is overlap in the $$T_{1}$$ summations. To make it explicit we need to split the intervals in $$[1,k]$$, $$[k+1,N-k]$$ and $$[1,N-2k]$$, $$[N-2k+1,N-k]$$
 
 $$
 \begin{align*}
@@ -142,7 +142,7 @@ T_{1}(k) = {\frac{\sigma_{s}}{N-k}} \left( \sum_{i=1}^{k} e^{j (2 \pi f_{n} (i+k
 \end{align*}
 $$
 
-normalizing the summation indexes so all the summations are expressed in terms of $$n_{i}$$ we get
+Modifying the summation indexes so all the summations are expressed in terms of $$n_{i}$$ we get:
 
 $$
 \begin{align*}
@@ -198,7 +198,7 @@ $$
 \operatorname{Re}(Noise) \sim \mathcal{N}(0,{\frac{\sigma_{n}^{2}}{2}})
 $$
 
-Back to (6), when $$N \geq 2k$$, the intervals $$[1,k]$$ and $$[N-k+1,N]$$ don't overlap, then with the purpose of estimating the power components we can say that
+Back to (6), when $$N \geq 2k$$, the intervals $$[1,k]$$ and $$[N-k+1,N]$$ don't overlap, then, with the purpose of estimating the power components we can say that
 
 $$
 T_{1}(k) \sim {\frac{\sigma_{s} e^{j 2 \pi f_{n} k} }{N-k}} \left(\mathcal{CN}(0,k\sigma_{n}^{2}) + 2\mathcal{N}(0,{\frac{(N-2k)\sigma_{n}^{2}}{2}}) + \mathcal{CN}(0,k\sigma_{n}^{2}) \right)
@@ -280,7 +280,7 @@ $$
   \right)
 $$
 
-Making $$\rho = {\frac{\sigma_{s}^{2}}{\sigma_{n}^{2}}}$$ our signal-to-noise ratio we get
+Let's call $$\rho$$ to our signal-to-noise ratio, $$\rho = {\frac{\sigma_{s}^{2}}{\sigma_{n}^{2}}}$$
 
 $$
 \operatorname{var}(\hat{f}_{n} - f_{n}) \approx {\frac{1}{4\pi^{2} k^{2} (N-k)\rho}}
@@ -375,21 +375,21 @@ $$
 \right.     \tag{8}\label{eq:8}
 $$
 
-being $$\rho$$ our complex sinusoid SNR (which is probably more appropriate to refer to it as _CNR_ or carrier-to-noise ratio).
+being $$\rho$$ our complex sinusoid SNR (which is then probably more appropriate to refer to it as _CNR_ or carrier-to-noise ratio).
 
 We can compare this with results from simulations. The following chart was produced with $$N=90$$, SNR 3 dB and 60k trials:
 
 ![Formula and simulations comparison][var_r_k]{:.center-image}
 
-Seems like it's accurate. This is also a confirmation of the intuition that was presented at the beginning of this note: low and high $$k$$ values produce low quality estimates, intermediate values gives better results, at least when the $$R(k)$$ are considered individually.
+Seems like it's accurate. This is also a confirmation of the intuition that was presented at the beginning of this note: low and high $$k$$ values produce low quality estimates, intermediate values give better results, at least when the $$R(k)$$ are considered individually.
 
 Indeed an interesting result and my initial ideal was to use it as an alternative way to compute the variance in the estimation error for the L&R method. Since the L&R method is based on the addition of a number of $$R(k)$$, it should be easy to derive it from (8). To say that is a mistake since the $$R(k)$$ are _correlated_ to each other. If we calculate the covariance matrix of the $$R(k)$$ on the same 60k trial simulation, we get values outside the main diagonal:
 
 ![R(k) covariance matrix][covariance_r_k]{:.center-image}
 
-I think that it's intuitive to understand that neighboring $$k$$ values are correlated to each other so I think this line of thought is not going to get us very far and I won't pursue it now.
+I think that it makes sense to say that neighboring $$k$$ values are correlated to each other, and it's probably going to be complicated to quantify that correlation, so don't I think this line of thought is going to get us very far and I won't pursue it at this point.
 
-Kudos to L&R for their insight and hard work. Things are much easier now with affordable computers to do the heavy lifting for us, they didn't have this luxury 30 years ago. I finish this note with my appreciation here.
+Kudos to L&R for their insight and hard work. Things are much easier now with affordable computers to do the heavy lifting for us, they didn't have this luxury 30 years ago. I finish this note with my appreciation.
 
 
 [l_and_r_explanation]:    /sdr/l_and_r_explanation/
