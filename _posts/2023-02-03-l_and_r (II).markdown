@@ -383,7 +383,7 @@ We can compare this with results from simulations. The following chart was produ
 
 Seems like it's accurate. This is also a confirmation of the intuition that was presented at the beginning of this note: low and high $$k$$ values produce low quality estimates, intermediate values give better results, at least when the $$R(k)$$ are considered individually.
 
-Indeed an interesting result and my initial ideal was to use it as an alternative way to compute the variance in the estimation error for the L&R method. Since the L&R method is based on the addition of a number of $$R(k)$$, it should be easy to derive it from (8). To say that is a mistake since the $$R(k)$$ are _correlated_ to each other. If we calculate the covariance matrix of the $$R(k)$$ on the same 60k trial simulation, we get values outside the main diagonal:
+Indeed an interesting result and my initial idea was to use it as an alternative way to compute the variance in the estimation error for the L&R method. Since the L&R method is based on the addition of a number of $$R(k)$$, it should be easy to derive it from (8). To say that is a mistake since the $$R(k)$$ are _correlated_ to each other. If we calculate the covariance matrix of the $$R(k)$$ on the same 60k trial simulation, we get values outside the main diagonal:
 
 ![R(k) covariance matrix][covariance_r_k]{:.center-image}
 
