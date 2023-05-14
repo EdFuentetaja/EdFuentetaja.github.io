@@ -50,9 +50,11 @@ social:
 
 # Analytics
 analytics:
-  provider               : google # false (default), "google", "google-universal", "custom"
+# EDF: now using Google Analytics 4
+  provider               : false # false (default), "google", "google-universal", "custom"
   google:
-    tracking_id          : UA-77214660-1
+#    tracking_id          : UA-77214660-1
+    gtag_id              : G-191GY7VHNF
 
 # Google AdSense
 google_ad_client         :
