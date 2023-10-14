@@ -29,13 +29,13 @@ $$
 = e^{j 2\pi f_n k} + n_{i+k}^{\prime*} + n_{i}^{\prime*} + n_{i+k}n^{*}_{i}  \tag{1}\label{eq:1}
 $$
 
-Remember that our frequency estimation consist on adding together a bunch of these terms and calculating the angle of the result. It's intuitive then to say that for small gap values $$k$$ our $$e^{j 2\pi f_n k}$$ is going to be near the real axis and the angle of our expression (1) is dominated by the noise components. Larger values of $$k$$ make our $$e^{j 2\pi f_n k}$$ stand out and should produce better estimates of $$f_n$$. The challenge here is that in the $$R$$ summation there are only a few auto-correlation terms at large $$k$$ (e.g.: with $$N=10$$, there is only one auto-correlation term at gap $$k=9$$, which is $$s_{10} s^{*}_{1}$$). There are, however, many terms at lower $$k$$ (e.g.: there are nine terms at $$k=1$$: $$s_{2} s^{*}_{1}, s_{3} s^{*}_{2}, ... s_{10} s^{*}_{9}$$). So, there is a tension: terms at short gaps are more noisy, but we are adding more, which lowers the overall noisiness. Terms at bigger gaps are less noisy, but we have fewer to add, so it's not so clear where is the sweet spot. Let's explore this.
+Remember that our frequency estimation consist of adding together a bunch of these terms and calculating the angle of the result. It's intuitive then to say that for small gap values $$k$$, our $$e^{j 2\pi f_n k}$$ is going to be near the real axis and the angle of our expression (1) is dominated by the noise components. Larger values of $$k$$ make our $$e^{j 2\pi f_n k}$$ stand out and should produce better estimates of $$f_n$$. The challenge here is that in the $$R$$ summation there are only a few auto-correlation terms at large $$k$$ (e.g.: with $$N=10$$, there is only one auto-correlation term at gap $$k=9$$, which is $$s_{10} s^{*}_{1}$$). There are, however, many terms at lower $$k$$ (e.g.: there are nine terms at $$k=1$$: $$s_{2} s^{*}_{1}, s_{3} s^{*}_{2}, ... s_{10} s^{*}_{9}$$). So, there is a tension: terms at short gaps are more noisy, but we are adding more, which lowers the overall noisiness. Terms at bigger gaps are less noisy, but we have fewer to add, so it's not so clear where is the sweet spot. Let's explore this.
 
 The term $$M$$ is the upper bound for the gaps we are going to use. Based on the previous, I had the idea (most likely not the first one to tread this path) that there should also be a lower bound:
 
 $$\hat{f_n} = {\frac{1}{\pi(M+1)}} \operatorname{arg} \left\{ \sum_{i=m_{1}}^{m_{2}} R(k) \right\}$$
 
-It will be interesting to see what's the expected accuracy in the frequency estimate with different $$m1, m2$$ values. I don't have the math belt level required to come up with the analytical expression, but fortunately these days we have computers to help us run a bunch of simulations: adding white noise to a sinusoid to make its SNR equal to 3 dB and with $$N$$=90 samples, the following chart represents the estimated RMS error with 100k trials for different values of $$m1$$ and $$m2$$:
+It would be interesting to see what's the expected accuracy in the frequency estimate with different $$m1, m2$$ values. I don't have the math belt level required to come up with the analytical expression, but fortunately these days we have computers to help us run a bunch of simulations: adding white noise to a sinusoid to make its SNR equal to 3 dB and with $$N$$=90 samples, the following chart represents the estimated RMS error with 100k trials for different values of $$m1$$ and $$m2$$:
 
 ![RMS error at 3 dB][rms_3db]{:.center-image}
 
@@ -91,9 +91,9 @@ $$
 \hat{f_{n}} = {\frac{\operatorname{arg}(R(k))}{2 \pi k}}                       \tag{3}\label{eq:3}
 $$
 
-What follows is the excruciating derivation of the analytical expression of the RMS error of this estimate at a given SNR level.
+What follows is the excruciating derivation of the analytical expression of the RMS error of this estimate at any given SNR level.
 
-OK, so they point is that we can't ignore the noise component any more. Expanding $$r$$ in eq. (2) we get:
+OK, so they point is that we can't keeping ignore the noise component. Expanding $$r$$ in eq. (2) we get:
 
 $$
 R(k) = {\frac{1}{N-k}}\sum_{i=1}^{N-k}(\sigma_{s} e^{j(2 \pi f_{n} (i+k) + \theta_{0})} + n_{i+k})(\sigma_{s} e^{-j(2 \pi f_{n} i + \theta_{0})} + n_{i}^{*})
