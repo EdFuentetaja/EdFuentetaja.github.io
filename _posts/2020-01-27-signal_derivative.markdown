@@ -66,17 +66,17 @@ Considering the derivative as a filter, it's an unusual one: it cancels complete
 
 ![Bandwidth limited signal with noise][signal_bw]{:.center-image}
 
-The important idea here is that the derivative of this signal is going to amplify up to 5 dB all that noise that shows up at the higher frequencies, outside of our signal's bandwidth and it's going to be amplified to a higher extent to our signal. Moreover, the lower frequency components of our signal are going to be attenuated, being its DC component completely removed.
+The important idea here is that the derivative of this signal is going to amplify up to 5 dB all that noise that shows up at the higher frequencies, outside of our signal's bandwidth and it's going to be amplified to a higher extent than our signal. Moreover, the lower frequency components of our signal are going to be attenuated, being its DC component completely removed.
 
 ![Effect of the derivative on the signal][d_signal_bw]{:.center-image}
 
 We can intuitively see that the signal-to-noise ratio of our resulting derivative is going to suffer and we can end up with something that might look very different from what we expected. So much so the bigger the noise power in our spare bandwidth and the higher the concentration of power of our signal at the lower frequencies.
 
-We can see that we need to be really careful here, but there is even more to it.
+We can see that we need to be really careful here, but we haven't reached the end of the story yet.
 
 ## Practical implementation of the derivative
 
-We haven't reached the end of the story yet. So far we have been talking about the derivative operation in its theoretical form. When it comes to its practical implementation we are going to be computing approximations to the derivative and we need to understand their properties and limitations.
+So far we have been talking about the derivative operation in its theoretical form. When it comes to its practical implementation we are going to be computing approximations to the derivative and we need to understand their properties and limitations.
 
 Probably the first idea that come to our minds when we are tasked with computing the derivative of a signal in the digital domain is to put together something like this:
 
