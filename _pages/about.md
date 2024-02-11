@@ -1,6 +1,6 @@
 ---
 title: "About"
-excerpt: "About."
+# excerpt: "About."
 permalink: /about/
 ---
 
