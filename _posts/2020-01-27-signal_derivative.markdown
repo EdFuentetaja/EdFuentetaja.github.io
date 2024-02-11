@@ -26,7 +26,7 @@ With all this preamble, let's now roll up our sleeves and jump once again into t
 
 $$s(n) = \frac{1}{N}\sum_{k-0}^{N-1}{S(k) e^{j 2 \pi k n / N}}$$
 
-that says that a signal $$s$$, whose samples are $$s(0)...s(N)$$, can be expressed as a complex weighted summation of phasors, being the weights the complex values $$S(0)...S(N)$$, also known as its "DFT coefficients" or "frequency bins."
+that says that a signal $$s$$, whose samples are $$s(0)...s(N)$$, can be expressed as a complex weighted summation of phasors, being the weights the complex values $$S(0)...S(N)$$, also known as its "DFT coefficients."
 
 Since the derivative of a phasor is given by
 
