@@ -19,14 +19,14 @@ teaser                   : # filename of teaser fallback teaser image placed in 
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
-  provider               : "disqus" # false (default), "disqus", "facebook", "google-plus", custom"
-  disqus:
-    shortname            : "edfuentetaja" # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
-  facebook:
-    # https://developers.facebook.com/docs/plugins/comments
-    appid                :
-    num_posts            : # 5 (default)
-    colorscheme          : # "light" (default), "dark"
+  provider               : "custom" # false (default), "disqus", "facebook", "google-plus", custom"
+#  disqus:
+#    shortname            : "edfuentetaja" # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
+#  facebook:
+#    # https://developers.facebook.com/docs/plugins/comments
+#    appid                :
+#    num_posts            : # 5 (default)
+#    colorscheme          : # "light" (default), "dark"
 
 # SEO Related
 google_site_verification :
@@ -81,13 +81,13 @@ author:
   keybase          :
   instagram        :
   lastfm           :
-  linkedin         :
+  linkedin         : eduardo-fuentetaja
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          :
+  twitter          : # ed_fuentetaja
   vine             :
   weibo            :
   xing             :

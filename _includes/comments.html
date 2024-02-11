@@ -10,6 +10,15 @@
   {% when "google-plus" %}
     <section class="g-comments" data-href="{{ base_path }}{{ page.url }}" data-first_party_property="BLOGGER" data-view_type="FILTERED_POSTMOD">Loading Google+ Comments ...</section>
   {% when "custom" %}
-    <section id="comments"></section>
+    <section id="comments">
+      <script src="https://utteranc.es/client.js"
+        repo="EdFuentetaja/EdFuentetaja.github.io"
+        issue-term="pathname"
+        label="Utterances"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+      </script>      
+    </section>
   {% endcase %}
 </div>
