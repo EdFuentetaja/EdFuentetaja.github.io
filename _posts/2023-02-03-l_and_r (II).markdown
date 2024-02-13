@@ -1,5 +1,5 @@
 ---
-title:  "L&R frequency estimation (II)"
+title:  "L&R Frequency Estimation (II)"
 date:   2023-03-11 00:00:00 +0800
 categories: SDR
 excerpt: "Closing remarks on this topic."
@@ -9,13 +9,13 @@ header:
 
 I finished the [last note][l_and_r_explanation] with the expression presented by Louise and  Reggiannini (L&R) in 1995 for the estimation of the frequency of a complex sinusoid:
 
-$$\hat{f_n} = {\frac{1}{\pi(M+1)}} \operatorname{arg} \left\{ \sum_{i=1}^{M} R(k) \right\} $$ 
+$$\hat{f_n} = {\frac{1}{\pi(M+1)}} \operatorname{arg} \left\{ \sum_{i=1}^{M} R(k) \right\} $$
 
 with
 
 $$R(k) \triangleq {\frac{1}{N-k}}\sum_{i=1}^{N-k} s_{i+k} s^{*}_{i}$$
 
-$$s_{i} = e^{j(2\pi f_n i + \theta_0)}$$ are the samples of our complex sinusoid signal, and $$f_n$$ and $$\hat{f_n}$$ are the true and estimated frequencies of our signal, respectively. We have $$N$$ consecutive samples available and there is a configuration parameter $$M$$ with $$M \leq N-1$$. The accuracy of the method, as well as it computational complexity, depends on the choice of $$M$$ and, as expected, there is a trade-of between both. I have been concerned with this trade-off lately. I'll try to convey in this note what I have learned so far. 
+$$s_{i} = e^{j(2\pi f_n i + \theta_0)}$$ are the samples of our complex sinusoid signal, and $$f_n$$ and $$\hat{f_n}$$ are the true and estimated frequencies of our signal, respectively. We have $$N$$ consecutive samples available and there is a configuration parameter $$M$$ with $$M \leq N-1$$. The accuracy of the method, as well as it computational complexity, depends on the choice of $$M$$ and, as expected, there is a trade-of between both. I have been concerned with this trade-off lately. I'll try to convey in this note what I have learned so far.
 
 As explained before, $$R(k)$$ compute the signal auto-correlation at a gap of $$k$$ samples. Considering that our complex sinusoid is affected by additive noise $$n$$, our $$s_{i+k} s^{*}_{i}$$ auto-correlation products can be expressed as:
 
@@ -327,7 +327,7 @@ $$
 and using the same approach we followed earlier:
 
 $$
-S_{1} + S_{2} = 
+S_{1} + S_{2} =
 \sum_{i=1}^{N-k} e^{j (2 \pi f_{n} i + \theta_{0})} n_{i}^{*} +
 2\sum_{i=N-k+1}^{k} \operatorname{Re}(n_{i}^{\prime}) +
 \sum_{i=k+1}^{N} e^{-j (2 \pi f_{n} i + \theta_{0})} n_{i}

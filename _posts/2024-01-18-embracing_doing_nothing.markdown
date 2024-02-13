@@ -1,8 +1,8 @@
 ---
-title:  "Embracing doing nothing"
+title:  "Embracing Doing Nothing"
 date:   2024-01-18 00:00:00 +0800
 categories: SDR
-excerpt: "Sometimes doing nothing is the best course of action. A symbol timing tracking situation is presented."
+excerpt: "Sometimes doing nothing is the best course of action. A symbol timing tracking situation helps to ilustrate this principle."
 header:
   image: "great_pyramid_cropped_c.jpg"
 ---

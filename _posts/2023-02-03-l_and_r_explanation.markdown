@@ -1,5 +1,5 @@
 ---
-title:  "L&R frequency estimation (I)"
+title:  "L&R Frequency Estimation"
 date:   2023-02-03 00:00:00 +0800
 categories: SDR
 excerpt: "An explanation on how this classical method does the job."
