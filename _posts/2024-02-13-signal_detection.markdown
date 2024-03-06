@@ -1,5 +1,5 @@
 ---
-title:  "Signal Detection: Matched filter"
+title:  "Signal Detection: Matched Filter"
 date:   2024-02-13 00:00:00 +0800
 categories: SDR
 excerpt: "Some notes on the topic of matched filtering. An example based on AIS is presented"
