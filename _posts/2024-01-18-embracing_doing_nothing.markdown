@@ -17,7 +17,7 @@ Symbol timing tracking is a critical piece in our overarching task of recovering
 *Image credit: [Wikipedia][eye_pattern_wikipedia]*
 {: style="text-align: center;"}
 
-we see that the maximum gap in the "eye" corresponds to the 0 point in the x-axis, representing the normalized symbol timing (aka symbol timing phase). There lies our best chance. At any other sampling point the gap in the eye will be smaller, indicating a penalty in the signal SNR. Notice how the eye is completely closed at -0.5 or 0.5. With such a bad timing error, we have a 50% chance of recovering our data. This is no better than a coin toss and we don't want to be there.
+we see that the maximum gap in the "eye" corresponds to the 0 point in the x-axis, representing the normalized symbol timing (aka symbol timing phase). There lies our best chance. At any other sampling point the gap in the eye will be smaller, indicating a penalty in the signal SNR. Notice how the eye is completely closed at ±0.5. With such a bad timing error, we have a 50% chance of recovering our data. This is no better than a coin toss and we don't want to be there.
 
 The tracking of the symbol timing is important because transmitter and receiver run with different, unsynchronized clocks, so, even if we manage to achieve a pretty good initial symbol timing estimation, the different pace of the clocks will make it drift, forward or backwards, and we will see how our signal quality drops until the point the eye closes too much and we lose it.
 
