@@ -43,7 +43,7 @@ $$d_N = R sin \phi$$
 
 also of the same magnitude of $$d_S$$.
 
-We can say then that our signal reaches element E a time
+We can say then that our signal reaches element E at time
 
 $$\frac{d_E}{\nu} = \frac{R}{\nu} cos \phi$$
 

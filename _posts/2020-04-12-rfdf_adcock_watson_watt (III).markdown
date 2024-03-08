@@ -65,7 +65,7 @@ which can be computed with two multiplications and one comparison.
 
 ### Trick #2: Computation of atan2
 
-We compute $$atan2(y,x)$$ using a table. The signs of $$x$$ and $$y$$ will tell us the quadrant and the ratio $$y/x$$ will tell us the degrees inside the quadrant. Since the accuracy of the WW technique is going to be worse than 1 degree, we don't really need a very big table. One more trick here is that our $$x$$ and $$y$$ are magnitudes. We can skip computing the expensive square root of the magnitudes by making our table be a table of $$atan2(\sqrt y2,\sqrt x2)$$ where $$x2$$ and $$y2$$ are our squared magnitudes.
+We compute $$atan2(y,x)$$ using a table. The signs of $$x$$ and $$y$$ will tell us the quadrant and the ratio $$y/x$$ will tell us the degrees inside the quadrant. Since the accuracy of the WW technique is going to be worse than 1 degree, we don't really need a very big table. One more consideration here is that our $$x$$ and $$y$$ are magnitudes. Magnitude of $$x$$ is computed as $$\sqrt{\Re(x)^2+\Im(x)^2}$$. We can skip computing expensive square roots by making our table be a table of $$atan2(\sqrt{y2},\sqrt{x2})$$ where $$x2$$ and $$y2$$ are our squared magnitudes.
 
 ### Trick #3: Averaging
 
