@@ -223,17 +223,24 @@ FB=zeros(1,numel(FA));
 FB(1+6)=FA(1+6);
 FB(end+1-6)=FA(end+1-6);
 sum(FB.*conj(FB))*100/sum(FA.*conj(FA))
+DC=FA(1);
+DC.*conj(DC)*100/sum(FA.*conj(FA))
 plot(abs(FB),'*');
-B=ifft(FB);
+plot(abs(DC),'*');
+FC=FB;
+FC(1) = DC;
+B=ifft(FC);
 
 figure(11)
 clf
 hold on;
-plot(angle(A)*180/pi)
-plot(angle(B)*180/pi);
+plot(angle(A)*180/pi,'.-')
+plot(angle(B)*180/pi,'.-');
 xlabel("Sample",'FontWeight','bold')
 ylabel("Angle (°)", 'FontWeight', 'bold')
 yticks((-90:30:90));
+lgd=legend("$$y(t)$$", '$$\hat{y}(t)$$','Interpreter','Latex');
+fontsize(lgd,14,'points')
 
 FA=fft(A);
 f=figure(3);
