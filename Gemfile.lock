@@ -285,8 +285,5 @@ DEPENDENCIES
   minimal-mistakes-jekyll
   webrick (~> 1.8)
 
-RUBY VERSION
-   ruby 3.0.7p220
-
 BUNDLED WITH
    2.2.33
