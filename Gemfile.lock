@@ -282,6 +282,7 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages (~> 232)
+  jekyll-sitemap
   minimal-mistakes-jekyll
 
 BUNDLED WITH
