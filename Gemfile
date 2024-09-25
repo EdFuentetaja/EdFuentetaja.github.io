@@ -6,5 +6,3 @@ gem "github-pages", "~> 232", group: :jekyll_plugins
 gem "minimal-mistakes-jekyll"
 
 #gem 'pygments.rb'
-
-gem "webrick", "~> 1.8"
