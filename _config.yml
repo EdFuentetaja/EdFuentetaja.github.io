@@ -232,4 +232,9 @@ defaults:
       layout: single
       author_profile: true
 
+  - scope:
+      path: 'resume/old/**'
+    values:
+      sitemap: false
+
 edf_header_image: "Wave_cloud_cropped.jpg"
