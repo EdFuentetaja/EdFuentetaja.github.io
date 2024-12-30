@@ -43,11 +43,11 @@ This technique is the optimal when the only signal impairment that we need to co
 
 This is typically indicated by saying that the original transmitted signal $$s$$ has been rotated by an unknown phase $$\theta$$:
 
-$$r_n = s_n e^{i\theta_n}$$
+$$r_n = s_n e^{i\theta}$$
 
 so our convolution becomes:
 
-$$y = \sum\limits_{n=1}^{N}{s_n e^{i\theta_n} m_n^*} = e^{i\theta_n} \sum\limits_{n=1}^{N}{s_n m_n^*}$$
+$$y = \sum\limits_{n=1}^{N}{s_n e^{i\theta} m_n^*} = e^{i\theta} \sum\limits_{n=1}^{N}{s_n m_n^*}$$
 
 Since $$\theta$$ is unknown to the receiver it means that the convolution result $$y$$ is a complex number pointing at a random angle. This is not the end of the world. What we can do is take its magnitude, or even better as we will see later, its squared magnitude:
 
