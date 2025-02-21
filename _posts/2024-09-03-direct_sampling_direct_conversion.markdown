@@ -424,7 +424,7 @@ $$
 cov(n_i, n_q) = \mathbb{E}[(n_i - \mathbb{E}[n_i])(n_q - \mathbb{E}[n_q])]
 $$
 
-where $$E$$ is the expected value, or mean in our context, which we already said it's 0 for both $$n_i$$ and $$n_q$$, then:
+where the expected value for both $$n_i$$ and $$n_q$$ should be zero, then:
 
 $$
 cov(n_i, n_q) = \mathbb{E}[n_i n_q] = \mathbb{E}[\frac{1}{\sqrt{2}} n(t) cos(2 \pi f_c t) \frac{1}{\sqrt{2}} n(t) sin(2 \pi f_c t)]
