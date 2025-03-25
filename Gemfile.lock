@@ -279,7 +279,6 @@ GEM
 
 PLATFORMS
   unknown
-  x86_64-linux
   x86_64-linux-gnu
 
 DEPENDENCIES
