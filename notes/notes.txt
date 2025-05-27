@@ -3,3 +3,9 @@ To run jekyll, cd to the root folder:
 bundle exec jekyll serve
 
 bundle is a batch file from Ruby22-x64\bin
+
+HTML and CSS compression:
+Download:
+    https://code.google.com/archive/p/htmlcompressor/downloads
+    https://github.com/yui/yuicompressor/releases
+java -jar ../tools/htmlcompressor-1.5.3.jar --compress-css resume/old/ed_fuentetaja_resume_2025.html > resume/ed_fuentetaja_resume_2025_c.html
